@@ -32,9 +32,9 @@
 
 :root{
   --bg:#000000;
-  --card:#2c2c2c;
-  --muted:#9aa4b2;
-  --accent:#6ee7b7;
+  --card:#434343;
+  --muted:#838383;
+  --accent:#ffffff;
   --text:#ffffff;
   --max-width:1100px;
 }
