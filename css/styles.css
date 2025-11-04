@@ -66,11 +66,14 @@ html,body{height:100%;margin:0;font-family:'Proxima Nova', sans-serif;background
 
 .hero-image {
   display: block;
-  max-width: 100%;
+  width: 100vw; /* full viewport width */
+  max-width: none;
   height: auto;
   margin-top: 22px;
-  border-radius: 8px;
-  box-shadow: 0 6px 18px rgba(0,0,0,0.35);
+  margin-left: 50%;
+  transform: translateX(-50%);
+  border-radius: 0; /* flush to edges */
+  box-shadow: none;
 }
 
 .work,.resume{max-width:var(--max-width);margin:28px auto;padding:0 16px;text-align:center}
