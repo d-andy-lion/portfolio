@@ -46,10 +46,10 @@ html,body{height:100%;margin:0;font-family:'Proxima Nova', sans-serif;background
 .nav-links{list-style:none;padding:0;margin:0;display:flex;gap:20px;position:absolute;left:50%;top:8px;transform:translateX(-50%);}
 .nav-links a{font-weight:700;color:var(--text);text-decoration:none}
 .hero {
-  margin: 60px 0 32px; /* slightly reduced top margin */
+  margin: 80px 0 40px;
   padding: 0;
   text-align: left;
-  max-width: 520px; /* narrower to make hero less wide */
+  max-width: 600px;
 }
 .hero h1 {
   margin: 0;
@@ -59,21 +59,20 @@ html,body{height:100%;margin:0;font-family:'Proxima Nova', sans-serif;background
 }
 .hero p {
   color: var(--text);
-  margin: 16px 0 24px;
-  font-size: 1.15rem;
-  line-height: 1.35;
+  margin: 20px 0 32px;
+  font-size: 1.25rem;
+  line-height: 1.4;
 }
-.cta {
-  display: inline-block;
-  padding: 10px 20px;
+
+.hero-image {
+  display: block;
+  max-width: 100%;
+  height: auto;
+  margin-top: 22px;
   border-radius: 8px;
-  background: var(--text);
-  color: #062018;
-  text-decoration: none;
-  font-weight: 600;
-  font-size: 1rem;
-  letter-spacing: 0.02em;
+  box-shadow: 0 6px 18px rgba(0,0,0,0.35);
 }
+
 .work,.resume{max-width:var(--max-width);margin:28px auto;padding:0 16px;text-align:center}
 .work h2,.resume h2{margin:0 0 12px}
 .grid{display:grid;grid-template-columns:repeat(auto-fit,minmax(220px,1fr));gap:16px;justify-items:center}
