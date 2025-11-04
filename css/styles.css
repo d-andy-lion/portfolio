@@ -42,12 +42,12 @@ html,body{height:100%;margin:0;font-family:'Proxima Nova', sans-serif;background
 .site-header{background:linear-gradient(90deg, rgba(255,255,255,0.02), rgba(255,255,255,0.01));padding-top:28px}
 .container{max-width:var(--max-width);margin:0 auto;padding:0 16px}
 .nav{
-  position: -webkit-sticky; /* Safari */
+  position: -webkit-sticky;
   position: sticky;
   top: 0;
   padding: 10px 0;
   z-index: 1000;
-  background: rgba(0,0,0,0.35); /* subtle background when stuck */
+  background: rgba(0,0,0,0.35);
   backdrop-filter: blur(6px);
 }
 .brand{font-weight:700;position:absolute;top:8px;left:0}
@@ -61,13 +61,13 @@ html,body{height:100%;margin:0;font-family:'Proxima Nova', sans-serif;background
 }
 .hero h1 {
   margin: 0;
-  font-size: 2.2rem; /* slightly smaller */
+  font-size: 2.2rem;
   line-height: 1.08;
   letter-spacing: -0.02em;
 }
 .hero p {
   color: var(--text);
-  margin: 20px 0 32px;
+  margin: 10px 0 32px;
   font-style: italic;
   font-weight: 400;
 }
@@ -94,26 +94,11 @@ html,body{height:100%;margin:0;font-family:'Proxima Nova', sans-serif;background
 .card p{margin:0;color:var(--muted);font-size:0.95rem}
 .resume p{color:var(--muted)}
 .site-footer {
-  margin: 60px auto 40px;
-  padding: 0 16px;
+  margin: 40px auto;
+  padding: 20px 16px;
   color: var(--muted);
-}
-
-.footer-nav {
-  display: flex;
-  justify-content: center;
-  gap: 24px;
-}
-
-.footer-icon {
-  width: 24px;
-  height: 24px;
-  opacity: 0.7;
-  transition: opacity 0.2s;
-}
-
-.footer-icon-link:hover .footer-icon {
-  opacity: 1;
+  text-align: center;
+  border-top: 1px solid rgba(255,255,255,0.03);
 }
 
 .work-section {
