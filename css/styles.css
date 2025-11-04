@@ -139,6 +139,14 @@ html,body{height:100%;margin:0;font-family:'Proxima Nova', sans-serif;background
   cursor: pointer;
 }
 .modal a{ color: var(--text); text-decoration: underline; }
+.modal ul {
+  list-style: none;
+  margin: 8px 0 0;
+  padding: 0;
+}
+.modal li {
+  margin: 6px 0;
+}
 .work-section {
   padding: 60px 0;
 }
