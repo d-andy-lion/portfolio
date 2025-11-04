@@ -151,19 +151,17 @@ html,body{height:100%;margin:0;font-family:'Proxima Nova', sans-serif;background
 .work-section {
   padding: 60px 0;
 }
-
-/* Gallery styles for work page */
 .work-section .gallery {
   display: grid;
   grid-template-columns: repeat(auto-fit, minmax(220px, 1fr));
   gap: 16px;
   align-items: stretch;
+  margin-top: 64px;
 }
 .work-section .gallery-link { display: block; }
 .work-section .gallery-item {
   width: 100%;
   max-width: 100%;
-  /* responsive height: min on small, scale with viewport, cap on large */
   height: clamp(160px, 18vw, 300px);
   object-fit: cover;
   display: block;
@@ -171,8 +169,6 @@ html,body{height:100%;margin:0;font-family:'Proxima Nova', sans-serif;background
   transition: transform 160ms ease, box-shadow 160ms ease;
 }
 .work-section .gallery-link:hover .gallery-item { transform: scale(1.03); box-shadow: 0 8px 30px rgba(0,0,0,0.45); }
-
-/* Lightbox overlay */
 .lightbox-overlay {
   position: fixed;
   inset: 0;
