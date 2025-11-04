@@ -45,15 +45,11 @@
         <p>© <span id="year">2025</span> Andy Mund</p>
       </div>
     </footer>
-
     <script>
-      // set copyright year
       (function(){
         var el = document.getElementById('year');
         if (el) el.textContent = new Date().getFullYear();
       })();
-
-      // modal open/close logic
       (function(){
         var trigger = document.getElementById('contact-trigger');
         var modal = document.getElementById('contact-modal');
@@ -63,7 +59,6 @@
           modal.classList.add('open');
           modal.setAttribute('aria-hidden','false');
           document.body.classList.add('no-scroll');
-          // move focus to modal
           var focusable = modal.querySelector('a,button,[tabindex]');
           if(focusable) focusable.focus();
         }
@@ -75,9 +70,7 @@
         }
         if(trigger) trigger.addEventListener('click', openModal);
         if(closeBtn) closeBtn.addEventListener('click', closeModal);
-        // close when clicking overlay
         modal.addEventListener('click', function(e){ if(e.target===modal) closeModal(); });
-        // close on Esc
         document.addEventListener('keydown', function(e){ if(e.key==='Escape') closeModal(); });
       })();
     </script>
