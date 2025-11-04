@@ -94,6 +94,41 @@ html,body{height:100%;margin:0;font-family:'Proxima Nova', sans-serif;background
   border-top: 1px solid rgba(255,255,255,0.03);
 }
 .site-footer p { margin: 0; text-align: center; }
+
+/* Modal styles */
+.no-scroll { overflow: hidden; }
+.modal-overlay {
+  position: fixed;
+  inset: 0;
+  display: none;
+  align-items: center;
+  justify-content: center;
+  background: rgba(0,0,0,0.6);
+  z-index: 2000;
+}
+.modal-overlay.open { display: flex; }
+.modal {
+  background: #070707;
+  color: var(--text);
+  padding: 28px;
+  max-width: 520px;
+  width: calc(100% - 40px);
+  border-radius: 10px;
+  box-shadow: 0 10px 40px rgba(0,0,0,0.6);
+  position: relative;
+}
+.modal h2 { margin-top: 0; }
+.modal-close {
+  position: absolute;
+  right: 10px;
+  top: 8px;
+  background: transparent;
+  border: none;
+  color: var(--text);
+  font-size: 24px;
+  cursor: pointer;
+}
+.modal a{ color: var(--text); text-decoration: underline; }
 .work-section {
   padding: 60px 0;
 }

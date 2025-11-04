@@ -12,7 +12,7 @@
       <div class="container">
         <nav class="nav">
           <ul class="nav-links">
-            <li><a href="#contact">CONTACT</a></li>
+            <li><a href="#" id="contact-trigger">CONTACT</a></li>
             <li><a href="https://d-andy-lion.github.io/Portfolio/assets/media/Andy_Mund_CV_Nov3.pdf" target="_blank" rel="noopener noreferrer">RESUME</a></li>
             <li><a href="work.html">WORK</a></li>
           </ul>
@@ -26,15 +26,59 @@
     <div class="hero-bleed">
       <img src="assets/media/Cover.png" alt="Cover" class="hero-image">
     </div>
+    <!-- Modal for contact -->
+    <div class="modal-overlay" id="contact-modal" aria-hidden="true">
+      <div class="modal" role="dialog" aria-modal="true" aria-labelledby="contact-modal-title">
+        <button class="modal-close" id="contact-close" aria-label="Close contact dialog">×</button>
+        <h2 id="contact-modal-title">Contact</h2>
+        <p>You can reach me at:</p>
+        <ul>
+          <li>Email: <a href="mailto:your-email@example.com">your-email@example.com</a></li>
+          <li>LinkedIn: <a href="https://www.linkedin.com/in/andymund" target="_blank" rel="noopener noreferrer">andymund</a></li>
+          <li>GitHub: <a href="https://github.com/d-andy-lion" target="_blank" rel="noopener noreferrer">d-andy-lion</a></li>
+        </ul>
+      </div>
+    </div>
+
     <footer class="site-footer">
       <div class="container">
-        <p>© <span id="year"></span> Andy Mund</p>
+        <p>© <span id="year">2025</span> Andy Mund</p>
       </div>
     </footer>
+
     <script>
+      // set copyright year
       (function(){
         var el = document.getElementById('year');
         if (el) el.textContent = new Date().getFullYear();
+      })();
+
+      // modal open/close logic
+      (function(){
+        var trigger = document.getElementById('contact-trigger');
+        var modal = document.getElementById('contact-modal');
+        var closeBtn = document.getElementById('contact-close');
+        function openModal(e){
+          if(e) e.preventDefault();
+          modal.classList.add('open');
+          modal.setAttribute('aria-hidden','false');
+          document.body.classList.add('no-scroll');
+          // move focus to modal
+          var focusable = modal.querySelector('a,button,[tabindex]');
+          if(focusable) focusable.focus();
+        }
+        function closeModal(){
+          modal.classList.remove('open');
+          modal.setAttribute('aria-hidden','true');
+          document.body.classList.remove('no-scroll');
+          if(trigger) trigger.focus();
+        }
+        if(trigger) trigger.addEventListener('click', openModal);
+        if(closeBtn) closeBtn.addEventListener('click', closeModal);
+        // close when clicking overlay
+        modal.addEventListener('click', function(e){ if(e.target===modal) closeModal(); });
+        // close on Esc
+        document.addEventListener('keydown', function(e){ if(e.key==='Escape') closeModal(); });
       })();
     </script>
   </body>
