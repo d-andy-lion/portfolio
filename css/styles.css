@@ -1,6 +1,3 @@
-/* Minimal responsive styles for portfolio */
-
-/* Proxima Nova (self-hosted .otf files placed in assets/fonts/) */
 @font-face {
   font-family: 'Proxima Nova';
   src: url('../assets/fonts/Proxima Nova Regular.otf') format('opentype');
