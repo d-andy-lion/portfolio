@@ -151,6 +151,51 @@ html,body{height:100%;margin:0;font-family:'Proxima Nova', sans-serif;background
 .work-section {
   padding: 60px 0;
 }
+
+/* Gallery styles for work page */
+.work-section .gallery {
+  display: grid;
+  grid-template-columns: repeat(auto-fit, minmax(220px, 1fr));
+  gap: 16px;
+  align-items: stretch;
+}
+.work-section .gallery-link { display: block; }
+.work-section .gallery-item {
+  width: 100%;
+  height: 220px;
+  object-fit: cover;
+  display: block;
+  border-radius: 8px;
+  transition: transform 160ms ease, box-shadow 160ms ease;
+}
+.work-section .gallery-link:hover .gallery-item { transform: scale(1.03); box-shadow: 0 8px 30px rgba(0,0,0,0.45); }
+
+/* Lightbox overlay */
+.lightbox-overlay {
+  position: fixed;
+  inset: 0;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  background: rgba(0,0,0,0.88);
+  z-index: 3000;
+  opacity: 0;
+  visibility: hidden;
+  pointer-events: none;
+  transition: opacity 200ms ease, visibility 200ms ease;
+}
+.lightbox-overlay.open { opacity: 1; visibility: visible; pointer-events: auto; }
+.lightbox-overlay img { max-width: 92%; max-height: 86%; border-radius: 8px; box-shadow: 0 10px 40px rgba(0,0,0,0.6); }
+.lightbox-close {
+  position: absolute;
+  right: 18px;
+  top: 18px;
+  background: transparent;
+  color: var(--text);
+  border: none;
+  font-size: 28px;
+  cursor: pointer;
+}
 .work-section h1 {
   margin: 0 0 40px;
   font-size: 2.4rem;
