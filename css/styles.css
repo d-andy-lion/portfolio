@@ -101,6 +101,8 @@ html,body{height:100%;margin:0;font-family:'Proxima Nova', sans-serif;background
   border-top: 1px solid rgba(255,255,255,0.03);
 }
 
+.site-footer p { margin: 0; text-align: center; }
+
 .work-section {
   padding: 60px 0;
 }
