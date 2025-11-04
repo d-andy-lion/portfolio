@@ -5,7 +5,6 @@
   font-style: normal;
   font-display: swap;
 }
-
 @font-face {
   font-family: 'Proxima Nova';
   src: url('../assets/fonts/Proxima Nova Regular Italic.otf') format('opentype');
@@ -13,7 +12,6 @@
   font-style: italic;
   font-display: swap;
 }
-
 @font-face {
   font-family: 'Proxima Nova';
   src: url('../assets/fonts/Proxima Nova Bold.otf') format('opentype');
@@ -21,7 +19,6 @@
   font-style: normal;
   font-display: swap;
 }
-
 @font-face {
   font-family: 'Proxima Nova';
   src: url('../assets/fonts/Proxima Nova Bold Italic.otf') format('opentype');
@@ -29,7 +26,6 @@
   font-style: italic;
   font-display: swap;
 }
-
 :root{
   --bg:#000000;
   --card:#ff0000;
@@ -71,12 +67,16 @@ html,body{height:100%;margin:0;font-family:'Proxima Nova', sans-serif;background
   font-style: italic;
   font-weight: 400;
 }
-
+.hero muted
+  color: var(--text);
+  margin: 10px 0 32px;
+  font-style: italic;
+  font-weight: 400;
+}
 .hero-bleed {
   width: 100%;
   overflow: hidden;
 }
-
 .hero-image {
   display: block;
   width: 100%;
@@ -85,7 +85,6 @@ html,body{height:100%;margin:0;font-family:'Proxima Nova', sans-serif;background
   border-radius: 0;
   box-shadow: none;
 }
-
 .work,.resume{max-width:var(--max-width);margin:28px auto;padding:0 16px;text-align:center}
 .work h2,.resume h2{margin:0 0 12px}
 .grid{display:grid;grid-template-columns:repeat(auto-fit,minmax(220px,1fr));gap:16px;justify-items:center}
@@ -100,28 +99,22 @@ html,body{height:100%;margin:0;font-family:'Proxima Nova', sans-serif;background
   text-align: center;
   border-top: 1px solid rgba(255,255,255,0.03);
 }
-
 .site-footer p { margin: 0; text-align: center; }
-
 .work-section {
   padding: 60px 0;
 }
-
 .work-section h1 {
   margin: 0 0 40px;
   font-size: 2.4rem;
   text-align: center;
 }
-
 .work-section .grid {
   margin-top: 30px;
 }
-
 .work-section .card {
   width: 100%;
   transition: transform 0.2s, box-shadow 0.2s;
 }
-
 .work-section .card:hover {
   transform: translateY(-5px);
   box-shadow: 0 5px 15px rgba(255, 255, 255, 0.1);
