@@ -127,7 +127,7 @@ html,body{height:100%;margin:0;font-family:'Proxima Nova', sans-serif;background
   transform: translateY(0) scale(1);
   opacity: 1;
 }
-.modal h2 { margin-top: 0; }
+.modal h2 { margin-top: 0;text-align:center; }
 .modal-close {
   position: absolute;
   right: 10px;
@@ -138,9 +138,10 @@ html,body{height:100%;margin:0;font-family:'Proxima Nova', sans-serif;background
   font-size: 24px;
   cursor: pointer;
 }
-.modal a{ color: var(--text); text-decoration: underline; }
+.modal a{ color: var(--text); }
 .modal ul {
   list-style: none;
+  text-align: center;
   margin: 8px 0 0;
   padding: 0;
 }
