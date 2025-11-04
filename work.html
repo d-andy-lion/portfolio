@@ -12,7 +12,7 @@
       <div class="container">
         <nav class="nav">
           <ul class="nav-links">
-            <li><a href="index.html#contact">HOME</a></li>
+            <li><a href="index.html#contact">CONTACT</a></li>
             <li><a href="https://d-andy-lion.github.io/Portfolio/assets/media/Andy_Mund_CV_Nov3.pdf" target="_blank" rel="noopener noreferrer">RESUME</a></li>
             <li><a href="work.html">WORK</a></li>
           </ul>
@@ -77,33 +77,6 @@
         overlay.addEventListener('click', function(e){ if(e.target===overlay) closeLightbox(); });
         closeBtn && closeBtn.addEventListener('click', closeLightbox);
         document.addEventListener('keydown', function(e){ if(e.key==='Escape') closeLightbox(); });
-      })();
-    </script>
-    <!-- Diagnostic: run with ?diag=1 to highlight overflowing elements -->
-    <script>
-      (function(){
-        try{
-          var params = new URLSearchParams(window.location.search);
-          if(!params.get('diag')) return;
-          console.log('DIAG: running overflow detector');
-          var els = Array.from(document.querySelectorAll('body *'));
-          els.forEach(function(el){
-            var cw = el.clientWidth || 0;
-            var sw = el.scrollWidth || 0;
-            var ch = el.clientHeight || 0;
-            var sh = el.scrollHeight || 0;
-            if(sw > Math.ceil(cw + 1)){
-              el.style.outline = '3px solid rgba(255,0,0,0.85)';
-              console.warn('DIAG overflow-x', el, {clientWidth:cw, scrollWidth:sw});
-            }
-            if(sh > Math.ceil(ch + 1)){
-              el.style.outline = '3px solid rgba(0,120,255,0.85)';
-              console.warn('DIAG overflow-y', el, {clientHeight:ch, scrollHeight:sh});
-            }
-          });
-          // Also log document sizes
-          console.log('DIAG doc', {docElWidth:document.documentElement.scrollWidth, winInnerWidth:window.innerWidth, docElHeight:document.documentElement.scrollHeight, winInnerHeight:window.innerHeight});
-        }catch(e){ console.error('DIAG error', e); }
       })();
     </script>
   </body>

@@ -35,14 +35,14 @@
 }
 *{box-sizing:border-box}
 html,body{height:100%;margin:0;font-family:'Proxima Nova', sans-serif;background:var(--bg);color:var(--text);font-weight:400;overflow-x:hidden}
-.site-header{background:linear-gradient(90deg, rgba(255,255,255,0.02), rgba(255,255,255,0.01));padding-top:28px}
+.site-header{background:linear-gradient(90deg, rgba(255,255,255,0.02), rgba(255,255,255,0.01));padding-top:28px;position:relative;z-index:4000}
 .container{max-width:var(--max-width);margin:0 auto;padding:0 16px;overflow-x:hidden}
 .nav{
   position: -webkit-sticky;
   position: sticky;
   top: 0;
   padding: 10px 0;
-  z-index: 1000;
+  z-index: 4001;
   background: rgba(0,0,0,0.35);
   backdrop-filter: blur(6px);
 }
