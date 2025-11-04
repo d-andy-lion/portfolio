@@ -33,8 +33,7 @@
 :root{
   --bg:#000000;
   --card:#ff0000;
-  --muted:#ffffff;
-  --accent:#ffffff;
+  --muted:#868686;
   --text:#ffffff;
   --max-width:1100px;
 }
@@ -44,11 +43,11 @@ html,body{height:100%;margin:0;font-family:'Proxima Nova', sans-serif;background
 .nav{max-width:var(--max-width);margin:0 auto;position:relative;padding:8px 0}
 .brand{font-weight:700;position:absolute;top:8px}
 .nav-links{list-style:none;padding:0;margin:0;display:flex;gap:14px;position:absolute;left:50%;top:8px;transform:translateX(-50%);}
-.nav-links a{font-weight:700;color:var(--muted);text-decoration:none}
-.hero{max-width:var(--max-width);margin:36px auto 8px;padding:20px 16px}
+.nav-links a{font-weight:700;color:var(--text);text-decoration:none}
+.hero{max-width:var(--max-width);margin:36px auto 8px;padding:20px 0}
 .hero h1{margin:0;font-size:2.4rem}
-.hero p{color:var(--muted);margin:12px 0 18px}
-.cta{display:inline-block;padding:10px 16px;border-radius:8px;background:var(--accent);color:#062018;text-decoration:none;font-weight:600}
+.hero p{color:var(--text);margin:12px 0 18px}
+.cta{display:inline-block;padding:10px 16px;border-radius:8px;background:var(--text);color:#062018;text-decoration:none;font-weight:600}
 .portfolio,.about,.contact{max-width:var(--max-width);margin:28px auto;padding:0 16px;text-align:center}
 .portfolio h2,.about h2,.contact h2{margin:0 0 12px}
 .grid{display:grid;grid-template-columns:repeat(auto-fit,minmax(220px,1fr));gap:16px;justify-items:center}
@@ -56,5 +55,5 @@ html,body{height:100%;margin:0;font-family:'Proxima Nova', sans-serif;background
 .card h3{margin:0 0 8px}
 .card p{margin:0;color:var(--muted);font-size:0.95rem}
 .about p{color:var(--muted)}
-.contact a{color:var(--accent);text-decoration:none}
+.contact a{color:var(--text);text-decoration:none}
 .site-footer{max-width:var(--max-width);margin:28px auto;padding:0 16px;color:var(--muted)}
