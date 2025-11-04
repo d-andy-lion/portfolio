@@ -60,6 +60,17 @@ html,body{height:100%;margin:0;font-family:'Proxima Nova', sans-serif;background
 .nav-links{list-style:none;padding:0;margin:0;display:flex;gap:20px;justify-content:center;align-items:center;}
 .nav-spacer { height: 64px; }
 .nav-links a{font-weight:700;color:var(--text);text-decoration:none;display:inline-block;padding:8px 10px;line-height:1.2}
+
+/* When an image lightbox is open we add `lightbox-open` to the body.
+   Hide the header/nav and collapse the nav spacer so the focus is on the image.
+*/
+.lightbox-open .site-header,
+.lightbox-open .nav {
+  opacity: 0;
+  transform: translateY(-8px);
+  pointer-events: none;
+}
+.lightbox-open .nav-spacer { display: none; }
 .hero { margin-top: 64px; }
 .hero p {
   color: var(--text);

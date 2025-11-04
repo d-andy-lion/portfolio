@@ -114,13 +114,15 @@
           document.body.classList.remove('no-scroll');
           img.src = '';
         }
-
+          document.body.classList.add('no-scroll');
+          document.body.classList.add('lightbox-open');
         links.forEach(function(a){
           a.addEventListener('click', openLightbox);
           a.addEventListener('mouseenter', function(){ preloadHref(a.getAttribute('href')); });
           a.addEventListener('touchstart', function(){ preloadHref(a.getAttribute('href')); }, {passive:true});
         });
-
+          document.body.classList.remove('no-scroll');
+          document.body.classList.remove('lightbox-open');
         overlay.addEventListener('click', function(e){
           try {
             var prevBtn = document.getElementById('lightbox-prev');
@@ -167,6 +169,7 @@
           overlay.classList.remove('open');
           overlay.setAttribute('aria-hidden','true');
           document.body.classList.remove('no-scroll');
+          document.body.classList.remove('lightbox-open');
           img.src = '';
         }, true);
         document.addEventListener('keydown', function(e){
