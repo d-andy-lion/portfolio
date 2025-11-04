@@ -64,13 +64,7 @@ html,body{height:100%;margin:0;font-family:'Proxima Nova', sans-serif;background
 .hero p {
   color: var(--text);
   margin: 10px 0 32px;
-  font-style: italic;
-  font-weight: 400;
-}
-.hero muted
-  color: var(--text);
-  margin: 10px 0 32px;
-  font-style: italic;
+  font-style: normal;
   font-weight: 400;
 }
 .hero-bleed {
