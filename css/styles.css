@@ -201,26 +201,35 @@ html,body{height:100%;margin:0;font-family:'Proxima Nova', sans-serif;background
   cursor: pointer;
 }
 .lightbox-arrow{
-  position: absolute;
+  /* Fixed to viewport edges so arrows always sit at screen sides */
+  position: fixed;
   top: 50%;
   transform: translateY(-50%);
-  width: 56px;
-  height: 56px;
-  border-radius: 50%;
-  background: rgba(255,255,255,0.04);
-  color: var(--text);
+  /* responsive size: small on phones, large on desktop */
+  width: clamp(64px, 10vw, 120px);
+  height: clamp(64px, 10vw, 120px);
+  border-radius: 10px;
+  background: rgba(0,0,0,0.85); /* black background to blend with overlay */
+  color: #ffffff; /* white glyph */
   border: none;
-  font-size: 34px;
+  font-size: clamp(28px, 6vw, 64px);
   display: flex;
   align-items: center;
   justify-content: center;
   cursor: pointer;
-  z-index: 3100;
-  opacity: 0.9;
+  z-index: 4002; /* above lightbox image but below other chrome if needed */
+  opacity: 1;
+  box-shadow: 0 6px 20px rgba(0,0,0,0.6);
+  transition: background 140ms ease, transform 120ms ease, opacity 120ms ease;
 }
-.lightbox-prev{ left: 18px; }
-.lightbox-next{ right: 18px; }
-.lightbox-arrow:hover{ opacity: 1; }
+.lightbox-prev{ left: 12px; }
+.lightbox-next{ right: 12px; }
+.lightbox-arrow:hover{ background: rgba(0,0,0,0.95); transform: translateY(-50%) scale(1.02); }
+
+/* Slightly reduce size on very small screens to avoid covering too much of the image */
+@media (max-width: 420px){
+  .lightbox-arrow{ width: 56px; height: 56px; font-size: 24px; left: 8px; right: 8px; }
+}
 .work-section h1 {
   margin: 0 0 40px;
   font-size: 2.4rem;

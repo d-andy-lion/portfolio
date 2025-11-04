@@ -58,8 +58,16 @@
     </main>
     <div class="lightbox-overlay" id="lightbox" aria-hidden="true">
       <button class="lightbox-close" id="lightbox-close" aria-label="Close image">×</button>
-      <button class="lightbox-arrow lightbox-prev" id="lightbox-prev" aria-label="Previous image">‹</button>
-      <button class="lightbox-arrow lightbox-next" id="lightbox-next" aria-label="Next image">›</button>
+      <button class="lightbox-arrow lightbox-prev" id="lightbox-prev" aria-label="Previous image">
+        <svg width="1.1em" height="1.1em" viewBox="0 0 24 24" aria-hidden="true" focusable="false" role="img">
+          <path fill="currentColor" d="M15.41 7.41L14 6l-6 6 6 6 1.41-1.41L10.83 12z" />
+        </svg>
+      </button>
+      <button class="lightbox-arrow lightbox-next" id="lightbox-next" aria-label="Next image">
+        <svg width="1.1em" height="1.1em" viewBox="0 0 24 24" aria-hidden="true" focusable="false" role="img">
+          <path fill="currentColor" d="M8.59 16.59L13.17 12 8.59 7.41 10 6l6 6-6 6z" />
+        </svg>
+      </button>
       <img id="lightbox-img" src="" alt="" />
     </div>
     <script>
