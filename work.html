@@ -58,6 +58,8 @@
     </main>
     <div class="lightbox-overlay" id="lightbox" aria-hidden="true">
       <button class="lightbox-close" id="lightbox-close" aria-label="Close image">×</button>
+      <button class="lightbox-arrow lightbox-prev" id="lightbox-prev" aria-label="Previous image">‹</button>
+      <button class="lightbox-arrow lightbox-next" id="lightbox-next" aria-label="Next image">›</button>
       <img id="lightbox-img" src="" alt="" />
     </div>
     <script>
@@ -157,6 +159,25 @@
         if(closeBtn) closeBtn.addEventListener('click', closeModal);
         modal.addEventListener('click', function(e){ if(e.target===modal) closeModal(); });
         document.addEventListener('keydown', function(e){ if(e.key==='Escape') closeModal(); });
+      })();
+    </script>
+    <script>
+      (function(){
+        var prev = document.getElementById('lightbox-prev');
+        var next = document.getElementById('lightbox-next');
+        var overlay = document.getElementById('lightbox');
+        var img = document.getElementById('lightbox-img');
+        var links = Array.prototype.slice.call(document.querySelectorAll('.gallery-link'));
+        if(!overlay || !img || !links.length) return;
+        function showAt(i){
+          if(i < 0) i = links.length - 1;
+          if(i >= links.length) i = 0;
+          overlay.dataset.currentIndex = String(i);
+          var src = links[i].getAttribute('href') || (links[i].querySelector('img') && links[i].querySelector('img').src);
+          if(src) img.src = src;
+        }
+        prev && prev.addEventListener('click', function(e){ e.stopPropagation(); var cur = Number(overlay.dataset.currentIndex || 0); showAt(cur - 1); });
+        next && next.addEventListener('click', function(e){ e.stopPropagation(); var cur = Number(overlay.dataset.currentIndex || 0); showAt(cur + 1); });
       })();
     </script>
   </body>

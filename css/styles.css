@@ -200,6 +200,27 @@ html,body{height:100%;margin:0;font-family:'Proxima Nova', sans-serif;background
   font-size: 28px;
   cursor: pointer;
 }
+.lightbox-arrow{
+  position: absolute;
+  top: 50%;
+  transform: translateY(-50%);
+  width: 56px;
+  height: 56px;
+  border-radius: 50%;
+  background: rgba(255,255,255,0.04);
+  color: var(--text);
+  border: none;
+  font-size: 34px;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  cursor: pointer;
+  z-index: 3100;
+  opacity: 0.9;
+}
+.lightbox-prev{ left: 18px; }
+.lightbox-next{ right: 18px; }
+.lightbox-arrow:hover{ opacity: 1; }
 .work-section h1 {
   margin: 0 0 40px;
   font-size: 2.4rem;
