@@ -241,6 +241,17 @@ html,body{height:100%;margin:0;font-family:'Proxima Nova', sans-serif;background
   .lightbox-prev{ left: 8px; }
   .lightbox-next{ right: 8px; }
 }
+@media (max-width: 420px) {
+  .modal {
+    aspect-ratio: auto;
+    width: calc(100% - 32px);
+    max-height: 86vh;
+    padding: 16px;
+  }
+  .modal h2 { font-size: 1.1rem; }
+  .modal ul { font-size: 1rem; line-height: 1.45; }
+  .modal li { margin: 8px 0; }
+}
 .work-section h1 {
   margin: 0 0 40px;
   font-size: 2.4rem;
