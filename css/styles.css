@@ -44,6 +44,9 @@ html,body{height:100%;margin:0;font-family:'Proxima Nova', sans-serif;background
   right: 0;
   padding: 12px 0;
   z-index: 4001;
+  display: flex;
+  align-items: center;
+  justify-content: center;
   /* make slightly more opaque so UI chrome (scrollbar fragments) don't show through */
   background: rgba(0,0,0,0.85);
   backdrop-filter: blur(6px);
@@ -53,7 +56,7 @@ html,body{height:100%;margin:0;font-family:'Proxima Nova', sans-serif;background
 .brand{font-weight:700;position:absolute;top:8px;left:0}
 .nav-links{list-style:none;padding:0;margin:0;display:flex;gap:20px;justify-content:center;align-items:center;}
 .nav-spacer { height: 64px; }
-.nav-links a{font-weight:700;color:var(--text);text-decoration:none}
+.nav-links a{font-weight:700;color:var(--text);text-decoration:none;display:inline-block;padding:8px 10px;line-height:1.2}
 .hero { margin-top: 64px; }
 .hero p {
   color: var(--text);
