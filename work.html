@@ -31,9 +31,7 @@
       </div>
     </div>
     </div>
-    <!-- spacer to offset fixed nav -->
     <div class="nav-spacer" aria-hidden="true"></div>
-
     <main class="work-section">
       <div class="container">
         <div class="gallery">
@@ -58,21 +56,16 @@
         </div>
       </div>
     </main>
-
-    <!-- Lightbox overlay for gallery -->
     <div class="lightbox-overlay" id="lightbox" aria-hidden="true">
       <button class="lightbox-close" id="lightbox-close" aria-label="Close image">×</button>
       <img id="lightbox-img" src="" alt="" />
     </div>
-
     <script>
       (function(){
-        // Lightbox for gallery images
         var links = document.querySelectorAll('.gallery-link');
         var overlay = document.getElementById('lightbox');
         var img = document.getElementById('lightbox-img');
         var closeBtn = document.getElementById('lightbox-close');
-
         function openLightbox(e){
           e && e.preventDefault && e.preventDefault();
           var src = this.getAttribute('href') || this.querySelector('img').src;
