@@ -79,5 +79,25 @@
         document.addEventListener('keydown', function(e){ if(e.key==='Escape') closeLightbox(); });
       })();
     </script>
+    <!-- Diagnostic: highlight any elements that cause horizontal overflow -->
+    <script>
+      (function(){
+        // Run after a short delay to let layout stabilize
+        setTimeout(function(){
+          var nodes = Array.prototype.slice.call(document.querySelectorAll('body *'));
+          var offenders = nodes.filter(function(el){
+            try { return el.scrollWidth > el.clientWidth + 1; } catch(e){ return false; }
+          });
+          if(offenders.length){
+            console.log('Overflowing elements detected:', offenders);
+            offenders.forEach(function(el){
+              el.style.outline = '3px solid rgba(255,0,0,0.6)';
+            });
+          } else {
+            console.log('No overflow detected');
+          }
+        }, 120);
+      })();
+    </script>
   </body>
 </html>
