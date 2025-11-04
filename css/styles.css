@@ -45,56 +45,9 @@ html,body{height:100%;margin:0;font-family:'Proxima Nova', sans-serif;background
 .brand{font-weight:700;position:absolute;top:8px;left:0}
 .nav-links{list-style:none;padding:0;margin:0;display:flex;gap:20px;position:absolute;left:50%;top:8px;transform:translateX(-50%);}
 .nav-links a{font-weight:700;color:var(--text);text-decoration:none}
-.hero {
-  position: relative;
-  margin: 28px 0 8px;
-  padding: 24px 0;
-  min-height: 45vh; /* reduced from 60vh to make video less tall */
-  display: flex;
-  align-items: center;
-  justify-content: center;
-  overflow: hidden;
-}
-
-.hero-video {
-  position: absolute;
-  inset: 0;
-  width: 100%;
-  height: 100%;
-  object-fit: cover;
-  z-index: 0;
-  pointer-events: none;
-}
-
-.hero::before {
-  content: "";
-  position: absolute;
-  inset: 0;
-  background: rgba(0,0,0,0.45);
-  z-index: 1;
-}
-
-.hero-content {
-  position: relative;
-  z-index: 2;
-  text-align: center;
-}
-
-.hero h1 {
-  margin: 0;
-  font-size: 2.0rem; /* slightly smaller to fit reduced hero */
-}
-
-.hero p {
-  color: var(--text);
-  margin: 12px 0 18px;
-}
-
-/* Responsive tweaks: make hero and video smaller on narrow screens */
-@media (max-width: 700px) {
-  .hero { min-height: 36vh; padding: 20px 0; }
-  .hero h1 { font-size: 1.6rem; }
-}
+.hero{margin:36px 0 8px;padding:20px 0}
+.hero h1{margin:0;font-size:2.4rem}
+.hero p{color:var(--text);margin:12px 0 18px}
 .cta{display:inline-block;padding:10px 16px;border-radius:8px;background:var(--text);color:#062018;text-decoration:none;font-weight:600}
 .work,.resume{max-width:var(--max-width);margin:28px auto;padding:0 16px;text-align:center}
 .work h2,.resume h2{margin:0 0 12px}
@@ -105,7 +58,6 @@ html,body{height:100%;margin:0;font-family:'Proxima Nova', sans-serif;background
 .resume p{color:var(--muted)}
 .site-footer{max-width:var(--max-width);margin:28px auto;padding:0 16px;color:var(--muted)}
 
-/* Work page styles */
 .work-section {
   padding: 60px 0;
 }
