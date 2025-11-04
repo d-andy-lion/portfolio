@@ -228,7 +228,10 @@ html,body{height:100%;margin:0;font-family:'Proxima Nova', sans-serif;background
 
 /* Slightly reduce size on very small screens to avoid covering too much of the image */
 @media (max-width: 420px){
-  .lightbox-arrow{ width: 56px; height: 56px; font-size: 24px; left: 8px; right: 8px; }
+  /* Keep size smaller on very small screens but keep side placement specific to each button */
+  .lightbox-arrow{ width: 56px; height: 56px; font-size: 24px; }
+  .lightbox-prev{ left: 8px; }
+  .lightbox-next{ right: 8px; }
 }
 .work-section h1 {
   margin: 0 0 40px;
