@@ -185,9 +185,10 @@ html,body{height:100%;margin:0;font-family:'Proxima Nova', sans-serif;background
   object-fit: cover;
   display: block;
   border-radius: 8px;
-  transition: transform 160ms ease, box-shadow 160ms ease;
+  transition: transform 110ms cubic-bezier(.2,.8,.2,1), box-shadow 110ms cubic-bezier(.2,.8,.2,1);
+  will-change: transform;
 }
-.work-section .gallery-link:hover .gallery-item { transform: scale(1.03); box-shadow: 0 8px 30px rgba(0,0,0,0.45); }
+.work-section .gallery-link:hover .gallery-item { transform: scale(1.035); box-shadow: 0 8px 30px rgba(0,0,0,0.45); }
 .lightbox-overlay {
   position: fixed;
   inset: 0;

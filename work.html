@@ -85,6 +85,19 @@
         var overlay = document.getElementById('lightbox');
         var img = document.getElementById('lightbox-img');
         var closeBtn = document.getElementById('lightbox-close');
+
+        // Preload map to cache hovered images so clicks open instantly
+        var _preloaded = new Map();
+        function preloadHref(href){
+          if(!href) return;
+          if(_preloaded.has(href)) return;
+          try{
+            var p = new Image();
+            p.src = href;
+            _preloaded.set(href, p);
+          }catch(e){}
+        }
+
         function openLightbox(e){
           e && e.preventDefault && e.preventDefault();
           var src = this.getAttribute('href') || this.querySelector('img').src;
@@ -94,13 +107,20 @@
           document.body.classList.add('no-scroll');
           closeBtn && closeBtn.focus();
         }
+
         function closeLightbox(){
           overlay.classList.remove('open');
           overlay.setAttribute('aria-hidden','true');
           document.body.classList.remove('no-scroll');
           img.src = '';
         }
-        links.forEach(function(a){ a.addEventListener('click', openLightbox); });
+
+        links.forEach(function(a){
+          a.addEventListener('click', openLightbox);
+          a.addEventListener('mouseenter', function(){ preloadHref(a.getAttribute('href')); });
+          a.addEventListener('touchstart', function(){ preloadHref(a.getAttribute('href')); }, {passive:true});
+        });
+
         overlay.addEventListener('click', function(e){
           try {
             var prevBtn = document.getElementById('lightbox-prev');
@@ -109,7 +129,7 @@
             if(!img.contains(e.target) && e.target !== prevBtn && e.target !== nextBtn && e.target !== closeBtn){
               closeLightbox();
             }
-          } catch(err) { }
+          } catch(err) {  }
         });
         closeBtn && closeBtn.addEventListener('click', closeLightbox);
         document.addEventListener('keydown', function(e){ if(e.key==='Escape') closeLightbox(); });
