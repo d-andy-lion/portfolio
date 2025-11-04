@@ -49,58 +49,11 @@ html,body{height:100%;margin:0;font-family:'Proxima Nova', sans-serif;background
 .hero h1{margin:0;font-size:2.4rem}
 .hero p{color:var(--text);margin:12px 0 18px}
 .cta{display:inline-block;padding:10px 16px;border-radius:8px;background:var(--text);color:#062018;text-decoration:none;font-weight:600}
-.portfolio,.resume,.contact{max-width:var(--max-width);margin:28px auto;padding:0 16px;text-align:center}
-.portfolio h2,.resume h2,.contact h2{margin:0 0 12px}
+.portfolio,.resume{max-width:var(--max-width);margin:28px auto;padding:0 16px;text-align:center}
+.portfolio h2,.resume h2{margin:0 0 12px}
 .grid{display:grid;grid-template-columns:repeat(auto-fit,minmax(220px,1fr));gap:16px;justify-items:center}
 .card{background:var(--card);padding:16px;border-radius:10px;text-align:center}
 .card h3{margin:0 0 8px}
 .card p{margin:0;color:var(--muted);font-size:0.95rem}
 .resume p{color:var(--muted)}
-.contact a{color:var(--text);text-decoration:none}
 .site-footer{max-width:var(--max-width);margin:28px auto;padding:0 16px;color:var(--muted)}
-
-/* Contact page styles */
-.contact-section {
-  padding: 60px 0;
-}
-
-.contact-section h1 {
-  margin: 0 0 30px;
-  font-size: 2.4rem;
-  text-align: center;
-}
-
-.contact-details {
-  max-width: 600px;
-  margin: 0 auto;
-  padding: 30px;
-  background: rgba(255, 255, 255, 0.05);
-  border-radius: 10px;
-}
-
-.contact-details p {
-  margin: 0 0 20px;
-  font-size: 1.1rem;
-}
-
-.contact-details ul {
-  list-style: none;
-  padding: 0;
-  margin: 0;
-}
-
-.contact-details li {
-  margin: 15px 0;
-  font-size: 1.1rem;
-}
-
-.contact-details a {
-  color: var(--text);
-  text-decoration: none;
-  border-bottom: 1px solid rgba(255, 255, 255, 0.3);
-  transition: border-color 0.2s;
-}
-
-.contact-details a:hover {
-  border-bottom-color: var(--text);
-}
