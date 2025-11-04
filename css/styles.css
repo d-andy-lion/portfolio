@@ -42,7 +42,7 @@
 html,body{height:100%;margin:0;font-family:'Proxima Nova', sans-serif;background:var(--bg);color:var(--text);font-weight:400}
 .site-header{background:linear-gradient(90deg, rgba(255,255,255,0.02), rgba(255,255,255,0.01));padding:28px 16px}
 .nav{max-width:var(--max-width);margin:0 auto;position:relative;padding:8px 0}
-.brand{font-weight:700;position:absolute;left:16px;top:8px}
+.brand{font-weight:700;position:absolute;top:8px}
 .nav-links{list-style:none;padding:0;margin:0;display:flex;gap:14px;position:absolute;left:50%;top:8px;transform:translateX(-50%);}
 .nav-links a{font-weight:700}
 .social-link{position:absolute;right:16px;top:8px;display:inline-flex;align-items:center;justify-content:center;color:var(--muted);text-decoration:none}
