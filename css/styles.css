@@ -1,0 +1,37 @@
+/* Minimal responsive styles for portfolio */
+:root{
+  --bg:#0f1720;
+  --card:#0b1220;
+  --muted:#9aa4b2;
+  --accent:#6ee7b7;
+  --text:#e6eef6;
+  --max-width:1100px;
+}
+*{box-sizing:border-box}
+html,body{height:100%;margin:0;font-family:Inter,Segoe UI,Helvetica,Arial,sans-serif;background:var(--bg);color:var(--text)}
+.site-header{background:linear-gradient(90deg, rgba(255,255,255,0.02), rgba(255,255,255,0.01));padding:28px 16px}
+.nav{max-width:var(--max-width);margin:0 auto;display:flex;align-items:center;justify-content:space-between}
+.brand{font-weight:700}
+.nav-links{list-style:none;padding:0;margin:0;display:flex;gap:14px}
+.nav-links a{color:var(--muted);text-decoration:none}
+.hero{max-width:var(--max-width);margin:36px auto 8px;padding:20px 16px}
+.hero h1{margin:0;font-size:2.4rem}
+.hero p{color:var(--muted);margin:12px 0 18px}
+.cta{display:inline-block;padding:10px 16px;border-radius:8px;background:var(--accent);color:#062018;text-decoration:none;font-weight:600}
+
+.projects,.about,.contact{max-width:var(--max-width);margin:28px auto;padding:0 16px}
+.projects h2,.about h2,.contact h2{margin:0 0 12px}
+.grid{display:grid;grid-template-columns:repeat(auto-fit,minmax(220px,1fr));gap:16px}
+.card{background:var(--card);padding:16px;border-radius:10px}
+.card h3{margin:0 0 8px}
+.card p{margin:0;color:var(--muted);font-size:0.95rem}
+
+.about p{color:var(--muted)}
+.contact a{color:var(--accent);text-decoration:none}
+
+.site-footer{max-width:var(--max-width);margin:28px auto;padding:0 16px;color:var(--muted)}
+
+@media (min-width:900px){
+  .hero{padding:40px 0}
+  .hero h1{font-size:3rem}
+}
