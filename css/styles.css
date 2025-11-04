@@ -69,11 +69,11 @@ html,body{height:100%;margin:0;font-family:'Proxima Nova', sans-serif;background
   position: relative;
   left: 50%;
   transform: translateX(-50%);
-  width: 100vw; /* full viewport width */
+  width: 100vw;
   max-width: none;
   height: auto;
   margin-top: 22px;
-  border-radius: 0; /* flush to edges */
+  border-radius: 0;
   box-shadow: none;
 }
 
