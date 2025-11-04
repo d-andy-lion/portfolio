@@ -67,15 +67,12 @@ html,body{height:100%;margin:0;font-family:'Proxima Nova', sans-serif;background
 .hero-image {
   display: block;
   position: relative;
+  left: 50%;
+  transform: translateX(-50%);
   width: 100vw; /* full viewport width */
   max-width: none;
   height: auto;
   margin-top: 22px;
-  /* pull the image out of the centered .container without causing overflow */
-  left: 50%;
-  right: 50%;
-  margin-left: -50vw;
-  margin-right: -50vw;
   border-radius: 0; /* flush to edges */
   box-shadow: none;
 }
