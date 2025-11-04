@@ -88,29 +88,22 @@
       })();
     </script>
     <script>
-      // Add navigation (left/right arrows and click-side) to the existing lightbox
       (function(){
         var links = Array.prototype.slice.call(document.querySelectorAll('.gallery-link'));
         var overlay = document.getElementById('lightbox');
         var img = document.getElementById('lightbox-img');
         var closeBtn = document.getElementById('lightbox-close');
-
         if(!overlay || !img || !links.length) return;
-
-        // keep track of current index on the overlay element
         function setCurrentIndex(i){
           if(i < 0) i = links.length - 1;
           if(i >= links.length) i = 0;
           overlay.dataset.currentIndex = String(i);
         }
-
-        // when a gallery link is clicked, update the currentIndex so our navigation knows which is active
         links.forEach(function(a, idx){
           a.addEventListener('click', function(){
             setCurrentIndex(idx);
           });
         });
-
         function showAtIndex(i){
           if(links.length === 0) return;
           if(i < 0) i = links.length - 1;
@@ -119,13 +112,10 @@
           var src = links[i].getAttribute('href') || (links[i].querySelector('img') && links[i].querySelector('img').src);
           if(src) img.src = src;
         }
-
         function showNext(){ showAtIndex(Number(overlay.dataset.currentIndex || 0) + 1); }
         function showPrev(){ showAtIndex(Number(overlay.dataset.currentIndex || 0) - 1); }
-
-        // capture-phase click handler on overlay: decide left/right/center action and stop propagation so existing close handler doesn't run
         overlay.addEventListener('click', function(e){
-          if(e.target !== overlay) return; // ignore clicks on image or controls
+          if(e.target !== overlay) return;
           var rect = overlay.getBoundingClientRect();
           var x = e.clientX - rect.left;
           if(x < rect.width * 0.4){
@@ -135,17 +125,13 @@
             e.stopPropagation();
             showNext();
           } else {
-            // center: allow existing handler to close (do nothing special)
           }
         }, true);
-
-        // keyboard navigation
         document.addEventListener('keydown', function(e){
           if(!overlay.classList.contains('open')) return;
           if(e.key === 'ArrowRight') { showNext(); e.preventDefault(); }
           if(e.key === 'ArrowLeft') { showPrev(); e.preventDefault(); }
         });
-
       })();
     </script>
     <script>
