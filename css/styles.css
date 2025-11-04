@@ -58,3 +58,49 @@ html,body{height:100%;margin:0;font-family:'Proxima Nova', sans-serif;background
 .resume p{color:var(--muted)}
 .contact a{color:var(--text);text-decoration:none}
 .site-footer{max-width:var(--max-width);margin:28px auto;padding:0 16px;color:var(--muted)}
+
+/* Contact page styles */
+.contact-section {
+  padding: 60px 0;
+}
+
+.contact-section h1 {
+  margin: 0 0 30px;
+  font-size: 2.4rem;
+  text-align: center;
+}
+
+.contact-details {
+  max-width: 600px;
+  margin: 0 auto;
+  padding: 30px;
+  background: rgba(255, 255, 255, 0.05);
+  border-radius: 10px;
+}
+
+.contact-details p {
+  margin: 0 0 20px;
+  font-size: 1.1rem;
+}
+
+.contact-details ul {
+  list-style: none;
+  padding: 0;
+  margin: 0;
+}
+
+.contact-details li {
+  margin: 15px 0;
+  font-size: 1.1rem;
+}
+
+.contact-details a {
+  color: var(--text);
+  text-decoration: none;
+  border-bottom: 1px solid rgba(255, 255, 255, 0.3);
+  transition: border-color 0.2s;
+}
+
+.contact-details a:hover {
+  border-bottom-color: var(--text);
+}
