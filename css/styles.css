@@ -124,10 +124,10 @@ html,body{height:100%;margin:0;font-family:'Proxima Nova', sans-serif;background
 .modal {
   background: rgba(7,7,7,0.75);
   color: var(--text);
-  width: clamp(280px, 48vw, 520px);
+  width: clamp(160px, 26vw, 260px);
   aspect-ratio: 1 / 1;
-  padding: 24px;
-  border-radius: 12px;
+  padding: 18px;
+  border-radius: 10px;
   box-shadow: 0 10px 40px rgba(0,0,0,0.6);
   backdrop-filter: blur(6px);
   border: 1px solid rgba(255,255,255,0.03);
@@ -139,7 +139,7 @@ html,body{height:100%;margin:0;font-family:'Proxima Nova', sans-serif;background
   flex-direction: column;
   justify-content: center;
   align-items: center;
-  gap: 12px;
+  gap: 10px;
   overflow: auto;
 }
 .modal-overlay.open .modal {
