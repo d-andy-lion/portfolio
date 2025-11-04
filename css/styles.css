@@ -48,7 +48,7 @@ html,body{height:100%;margin:0;font-family:'Proxima Nova', sans-serif;background
 .hero{max-width:var(--max-width);margin:36px auto 8px;padding:20px 16px}
 .hero h1{margin:0;font-size:2.4rem}
 .hero p{color:var(--muted);margin:12px 0 18px}
-.cta{display:inline-block;padding:10px 16px;border-radius:8px;background:var(--accent);color:#062018;text-decoration:none;font-weight:600}
+.button{display:inline-block;padding:10px 16px;border-radius:8px;background:var(--accent);color:#062018;text-decoration:none;font-weight:600}
 .portfolio,.about,.contact{max-width:var(--max-width);margin:28px auto;padding:0 16px;text-align:center}
 .portfolio h2,.about h2,.contact h2{margin:0 0 12px}
 .grid{display:grid;grid-template-columns:repeat(auto-fit,minmax(220px,1fr));gap:16px;justify-items:center}
