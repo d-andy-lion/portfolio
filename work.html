@@ -101,7 +101,16 @@
           img.src = '';
         }
         links.forEach(function(a){ a.addEventListener('click', openLightbox); });
-        overlay.addEventListener('click', function(e){ if(e.target===overlay) closeLightbox(); });
+        overlay.addEventListener('click', function(e){
+          try {
+            var prevBtn = document.getElementById('lightbox-prev');
+            var nextBtn = document.getElementById('lightbox-next');
+            if(e.target === overlay) { closeLightbox(); return; }
+            if(!img.contains(e.target) && e.target !== prevBtn && e.target !== nextBtn && e.target !== closeBtn){
+              closeLightbox();
+            }
+          } catch(err) { }
+        });
         closeBtn && closeBtn.addEventListener('click', closeLightbox);
         document.addEventListener('keydown', function(e){ if(e.key==='Escape') closeLightbox(); });
       })();
