@@ -174,6 +174,11 @@ html,body{height:100%;margin:0;font-family:'Proxima Nova', sans-serif;background
 .modal li {
   margin: 6px 0;
 }
+.modal .contact-icons{ display:flex; gap:14px; align-items:center; justify-content:center; padding:0; margin:6px 0 0; }
+.modal .contact-icons li{ margin:0; list-style:none; }
+.modal .contact-icons a{ display:inline-block; width:48px; height:48px; }
+.modal .contact-icons .contact-icon{ width:100%; height:100%; object-fit:contain; display:block; filter:invert(1) brightness(1.2); }
+.modal .contact-icons a:hover .contact-icon{ transform:scale(1.06); }
 .work-section {
   padding: 60px 0;
 }

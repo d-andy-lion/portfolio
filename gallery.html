@@ -19,18 +19,6 @@
         </nav>
       </div>
     </header>
-    <div class="modal-overlay" id="contact-modal" aria-hidden="true">
-      <div class="modal" role="dialog" aria-modal="true" aria-labelledby="contact-modal-title">
-        <button class="modal-close" id="contact-close" aria-label="Close contact dialog">×</button>
-        <h2 id="contact-modal-title">CONTACT</h2>
-        <ul>
-          <li><a href="mailto:mund.aubrey@outlook.com">Email</a></li>
-          <li><a href="https://www.linkedin.com/in/andymund" target="_blank" rel="noopener noreferrer">LinkedIn</a></li>
-          <li><a href="https://www.artstation.com/dandylion12" target="_blank" rel="noopener noreferrer">Artstation</a></li>
-        </ul>
-      </div>
-    </div>
-    </div>
     <div class="nav-spacer" aria-hidden="true"></div>
     <main class="work-section">
       <div class="container">
@@ -303,31 +291,6 @@
           if(e.key === 'ArrowRight') { showNext(); e.preventDefault(); }
           if(e.key === 'ArrowLeft') { showPrev(); e.preventDefault(); }
         });
-      })();
-    </script>
-    <script>
-      (function(){
-        var trigger = document.getElementById('contact-trigger');
-        var modal = document.getElementById('contact-modal');
-        var closeBtn = document.getElementById('contact-close');
-        function openModal(e){
-          if(e) e.preventDefault();
-          modal.classList.add('open');
-          modal.setAttribute('aria-hidden','false');
-          document.body.classList.add('no-scroll');
-          var focusable = modal.querySelector('a,button,[tabindex]');
-          if(focusable) focusable.focus();
-        }
-        function closeModal(){
-          modal.classList.remove('open');
-          modal.setAttribute('aria-hidden','true');
-          document.body.classList.remove('no-scroll');
-          if(trigger) trigger.focus();
-        }
-        if(trigger) trigger.addEventListener('click', openModal);
-        if(closeBtn) closeBtn.addEventListener('click', closeModal);
-        modal.addEventListener('click', function(e){ if(e.target===modal) closeModal(); });
-        document.addEventListener('keydown', function(e){ if(e.key==='Escape') closeModal(); });
       })();
     </script>
     <script>
