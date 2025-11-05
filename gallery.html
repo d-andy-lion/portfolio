@@ -87,7 +87,7 @@
             <img class="gallery-item" src="assets/media/Gallery17.png" />
           </a>
           <a class="gallery-link" href="assets/media/Gallery18.mp4">
-            <img class="gallery-item" src="assets/media/Gallery18.mp4" />
+            <img class="gallery-item" src="data:image/svg+xml;utf8,<svg xmlns='http://www.w3.org/2000/svg' viewBox='0 0 800 450'><rect fill='%23000' width='800' height='450'/><polygon fill='%23fff' points='320,225 520,145 520,305'/></svg>" alt="Video thumbnail" />
           </a>
         </div>
       </div>
@@ -105,6 +105,10 @@
         </svg>
       </button>
       <img id="lightbox-img" src="" alt="" />
+      <!-- video player for mp4/webm items; hidden by default -->
+      <video id="lightbox-video" controls playsinline style="max-width:92%; max-height:86%; border-radius:8px; display:none; background: #000;">
+        Your browser does not support the video tag.
+      </video>
     </div>
     <script>
       // Shuffle gallery items each time the page loads so the gallery shows a new order.
@@ -129,27 +133,60 @@
         var img = document.getElementById('lightbox-img');
         var closeBtn = document.getElementById('lightbox-close');
 
-        // Preload map to cache hovered images so clicks open instantly
+        // Preload map to cache hovered images/videos so clicks open instantly
         var _preloaded = new Map();
+        function isVideoUrl(u){
+          return typeof u === 'string' && /\.(mp4|webm|ogg)(\?|$)/i.test(u);
+        }
         function preloadHref(href){
           if(!href) return;
           if(_preloaded.has(href)) return;
           try{
-            var p = new Image();
-            p.src = href;
-            _preloaded.set(href, p);
+            if(isVideoUrl(href)){
+              var v = document.createElement('video');
+              v.preload = 'auto';
+              v.src = href;
+              _preloaded.set(href, v);
+            } else {
+              var p = new Image();
+              p.src = href;
+              _preloaded.set(href, p);
+            }
           }catch(e){}
         }
 
         function openLightbox(e){
           e && e.preventDefault && e.preventDefault();
           var src = this.getAttribute('href') || this.querySelector('img').src;
-          img.src = src;
           overlay.classList.add('open');
           overlay.setAttribute('aria-hidden','false');
           document.body.classList.add('no-scroll');
           // mark the page so header/nav can be hidden while the lightbox is open
           document.body.classList.add('lightbox-open');
+          // decide whether to show image or video
+          var videoEl = document.getElementById('lightbox-video');
+          if(isVideoUrl(src)){
+            // show video
+            try{
+              img.style.display = 'none';
+              videoEl.style.display = 'block';
+              videoEl.src = src;
+              // if user clicked, play is allowed; attempt play and ignore promise
+              var p = videoEl.play();
+              if(p && p.catch) p.catch(function(){/* autoplay prevented; user can tap play */});
+            }catch(err){
+              // fallback to image view showing nothing
+              videoEl.style.display = 'none';
+              img.style.display = 'block';
+              img.src = '';
+            }
+          } else {
+            // show image
+            try{ videoEl.pause(); videoEl.removeAttribute('src'); videoEl.load(); }catch(e){}
+            videoEl.style.display = 'none';
+            img.style.display = 'block';
+            img.src = src;
+          }
           closeBtn && closeBtn.focus();
         }
 
@@ -158,6 +195,10 @@
           overlay.setAttribute('aria-hidden','true');
           document.body.classList.remove('no-scroll');
           document.body.classList.remove('lightbox-open');
+          try{
+            var videoEl = document.getElementById('lightbox-video');
+            if(videoEl){ videoEl.pause(); videoEl.removeAttribute('src'); videoEl.load(); videoEl.style.display = 'none'; }
+          }catch(e){}
           img.src = '';
         }
 
@@ -208,7 +249,17 @@
           if(i >= links.length) i = 0;
           overlay.dataset.currentIndex = String(i);
           var src = links[i].getAttribute('href') || (links[i].querySelector('img') && links[i].querySelector('img').src);
-          if(src) img.src = src;
+          if(src){
+            var videoEl = document.getElementById('lightbox-video');
+            if(isVideoUrl(src)){
+              try{ img.style.display='none'; videoEl.style.display='block'; videoEl.src = src; var p = videoEl.play(); if(p && p.catch) p.catch(function(){}); }catch(e){ videoEl.style.display='none'; img.style.display='block'; img.src = ''; }
+            } else {
+              try{ if(videoEl){ videoEl.pause(); videoEl.removeAttribute('src'); videoEl.load(); videoEl.style.display='none'; } }catch(e){}
+              videoEl && (videoEl.style.display='none');
+              img.style.display='block';
+              img.src = src;
+            }
+          }
         }
         function showNext(){ showAtIndex(Number(overlay.dataset.currentIndex || 0) + 1); }
         function showPrev(){ showAtIndex(Number(overlay.dataset.currentIndex || 0) - 1); }
@@ -265,7 +316,17 @@
           if(i >= links.length) i = 0;
           overlay.dataset.currentIndex = String(i);
           var src = links[i].getAttribute('href') || (links[i].querySelector('img') && links[i].querySelector('img').src);
-          if(src) img.src = src;
+          if(src){
+            var videoEl = document.getElementById('lightbox-video');
+            if(isVideoUrl(src)){
+              try{ img.style.display='none'; videoEl.style.display='block'; videoEl.src = src; var p = videoEl.play(); if(p && p.catch) p.catch(function(){}); }catch(e){ videoEl.style.display='none'; img.style.display='block'; img.src = ''; }
+            } else {
+              try{ if(videoEl){ videoEl.pause(); videoEl.removeAttribute('src'); videoEl.load(); videoEl.style.display='none'; } }catch(e){}
+              videoEl && (videoEl.style.display='none');
+              img.style.display='block';
+              img.src = src;
+            }
+          }
         }
         prev && prev.addEventListener('click', function(e){ e.stopPropagation(); var cur = Number(overlay.dataset.currentIndex || 0); showAt(cur - 1); });
         next && next.addEventListener('click', function(e){ e.stopPropagation(); var cur = Number(overlay.dataset.currentIndex || 0); showAt(cur + 1); });
