@@ -188,7 +188,8 @@ html,body{height:100%;margin:0;font-family:'Proxima Nova', sans-serif;background
 .work-section .gallery-item {
   width: 100%;
   max-width: 100%;
-  height: clamp(160px, 18vw, 300px);
+  aspect-ratio: 1 / 1;
+  height: auto;
   object-fit: cover;
   display: block;
   border-radius: 8px;
@@ -196,7 +197,7 @@ html,body{height:100%;margin:0;font-family:'Proxima Nova', sans-serif;background
   will-change: transform;
 }
 .work-section .gallery-link:hover .gallery-item { transform: scale(1.035); box-shadow: 0 8px 30px rgba(0,0,0,0.45); }
-.gallery-video-thumb{ display:block; width:100%; height:clamp(160px,18vw,300px); object-fit:cover; border-radius:8px; }
+.gallery-video-thumb{ display:block; width:100%; aspect-ratio:1 / 1; height:auto; object-fit:cover; border-radius:8px; }
 .lightbox-overlay {
   position: fixed;
   inset: 0;
