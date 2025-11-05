@@ -328,8 +328,38 @@
             }
           }
         }
-        prev && prev.addEventListener('click', function(e){ e.stopPropagation(); var cur = Number(overlay.dataset.currentIndex || 0); showAt(cur - 1); });
-        next && next.addEventListener('click', function(e){ e.stopPropagation(); var cur = Number(overlay.dataset.currentIndex || 0); showAt(cur + 1); });
+        prev && prev.addEventListener('click', function(e){
+          e.stopPropagation();
+          var cur = Number(overlay.dataset.currentIndex || 0);
+          var currentSrc = (document.getElementById('lightbox-video') && document.getElementById('lightbox-video').style.display !== 'none') ? document.getElementById('lightbox-video').src : (document.getElementById('lightbox-img') && document.getElementById('lightbox-img').src);
+          if(!overlay.dataset.currentIndex || !(links[cur] && (links[cur].getAttribute('href') === currentSrc || (links[cur].querySelector('img') && links[cur].querySelector('img').src === currentSrc) || (links[cur].querySelector('video') && links[cur].querySelector('video').src === currentSrc)))){
+            var found = -1;
+            for(var i=0;i<links.length;i++){
+              var href = links[i].getAttribute('href');
+              var imgEl = links[i].querySelector('img');
+              var vidEl = links[i].querySelector('video');
+              if(href === currentSrc || (imgEl && imgEl.src === currentSrc) || (vidEl && vidEl.src === currentSrc)) { found = i; break; }
+            }
+            if(found >= 0) cur = found;
+          }
+          showAt(cur - 1);
+        });
+        next && next.addEventListener('click', function(e){
+          e.stopPropagation();
+          var cur = Number(overlay.dataset.currentIndex || 0);
+          var currentSrc = (document.getElementById('lightbox-video') && document.getElementById('lightbox-video').style.display !== 'none') ? document.getElementById('lightbox-video').src : (document.getElementById('lightbox-img') && document.getElementById('lightbox-img').src);
+          if(!overlay.dataset.currentIndex || !(links[cur] && (links[cur].getAttribute('href') === currentSrc || (links[cur].querySelector('img') && links[cur].querySelector('img').src === currentSrc) || (links[cur].querySelector('video') && links[cur].querySelector('video').src === currentSrc)))){
+            var found = -1;
+            for(var i=0;i<links.length;i++){
+              var href = links[i].getAttribute('href');
+              var imgEl = links[i].querySelector('img');
+              var vidEl = links[i].querySelector('video');
+              if(href === currentSrc || (imgEl && imgEl.src === currentSrc) || (vidEl && vidEl.src === currentSrc)) { found = i; break; }
+            }
+            if(found >= 0) cur = found;
+          }
+          showAt(cur + 1);
+        });
       })();
     </script>
     <script>
