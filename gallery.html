@@ -12,7 +12,7 @@
       <div class="container">
         <nav class="nav">
           <ul class="nav-links">
-            <li><a href="index.html">HOE</a></li>
+            <li><a href="index.html">HOME</a></li>
             <li><a href="gallery.html">GALLERY</a></li>
             <li><a href="https://d-andy-lion.github.io/Portfolio/assets/media/Andy_Mund_CV_Nov2025.pdf" target="_blank" rel="noopener noreferrer">RESUME</a></li>
           </ul>
@@ -331,14 +331,19 @@
         prev && prev.addEventListener('click', function(e){
           e.stopPropagation();
           var cur = Number(overlay.dataset.currentIndex || 0);
-          var currentSrc = (document.getElementById('lightbox-video') && document.getElementById('lightbox-video').style.display !== 'none') ? document.getElementById('lightbox-video').src : (document.getElementById('lightbox-img') && document.getElementById('lightbox-img').src);
-          if(!overlay.dataset.currentIndex || !(links[cur] && (links[cur].getAttribute('href') === currentSrc || (links[cur].querySelector('img') && links[cur].querySelector('img').src === currentSrc) || (links[cur].querySelector('video') && links[cur].querySelector('video').src === currentSrc)))){
+          var videoEl = document.getElementById('lightbox-video');
+          var imgElShown = document.getElementById('lightbox-img');
+          var currentSrc = (videoEl && videoEl.style.display !== 'none') ? videoEl.src : (imgElShown && imgElShown.src);
+          var currentAbs = currentSrc ? String(currentSrc) : '';
+          var needFind = !overlay.dataset.currentIndex || !(links[cur] && (new URL(links[cur].getAttribute('href') || '', location.href).href === currentAbs || (links[cur].querySelector('img') && links[cur].querySelector('img').src === currentAbs) || (links[cur].querySelector('video') && links[cur].querySelector('video').src === currentAbs)));
+          if(needFind){
             var found = -1;
             for(var i=0;i<links.length;i++){
               var href = links[i].getAttribute('href');
-              var imgEl = links[i].querySelector('img');
-              var vidEl = links[i].querySelector('video');
-              if(href === currentSrc || (imgEl && imgEl.src === currentSrc) || (vidEl && vidEl.src === currentSrc)) { found = i; break; }
+              var linkAbs = href ? new URL(href, location.href).href : '';
+              var liImg = links[i].querySelector('img');
+              var liVid = links[i].querySelector('video');
+              if(linkAbs === currentAbs || (liImg && liImg.src === currentAbs) || (liVid && liVid.src === currentAbs)) { found = i; break; }
             }
             if(found >= 0) cur = found;
           }
@@ -347,14 +352,19 @@
         next && next.addEventListener('click', function(e){
           e.stopPropagation();
           var cur = Number(overlay.dataset.currentIndex || 0);
-          var currentSrc = (document.getElementById('lightbox-video') && document.getElementById('lightbox-video').style.display !== 'none') ? document.getElementById('lightbox-video').src : (document.getElementById('lightbox-img') && document.getElementById('lightbox-img').src);
-          if(!overlay.dataset.currentIndex || !(links[cur] && (links[cur].getAttribute('href') === currentSrc || (links[cur].querySelector('img') && links[cur].querySelector('img').src === currentSrc) || (links[cur].querySelector('video') && links[cur].querySelector('video').src === currentSrc)))){
+          var videoEl = document.getElementById('lightbox-video');
+          var imgElShown = document.getElementById('lightbox-img');
+          var currentSrc = (videoEl && videoEl.style.display !== 'none') ? videoEl.src : (imgElShown && imgElShown.src);
+          var currentAbs = currentSrc ? String(currentSrc) : '';
+          var needFind = !overlay.dataset.currentIndex || !(links[cur] && (new URL(links[cur].getAttribute('href') || '', location.href).href === currentAbs || (links[cur].querySelector('img') && links[cur].querySelector('img').src === currentAbs) || (links[cur].querySelector('video') && links[cur].querySelector('video').src === currentAbs)));
+          if(needFind){
             var found = -1;
             for(var i=0;i<links.length;i++){
               var href = links[i].getAttribute('href');
-              var imgEl = links[i].querySelector('img');
-              var vidEl = links[i].querySelector('video');
-              if(href === currentSrc || (imgEl && imgEl.src === currentSrc) || (vidEl && vidEl.src === currentSrc)) { found = i; break; }
+              var linkAbs = href ? new URL(href, location.href).href : '';
+              var liImg = links[i].querySelector('img');
+              var liVid = links[i].querySelector('video');
+              if(linkAbs === currentAbs || (liImg && liImg.src === currentAbs) || (liVid && liVid.src === currentAbs)) { found = i; break; }
             }
             if(found >= 0) cur = found;
           }
