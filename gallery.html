@@ -14,7 +14,7 @@
           <ul class="nav-links">
             <li><a href="index.html">HOME</a></li>
             <li><a href="https://d-andy-lion.github.io/Portfolio/assets/media/Andy_Mund_CV_Nov2025.pdf" target="_blank" rel="noopener noreferrer">RESUME</a></li>
-            <li><a href="work.html">WORK</a></li>
+            <li><a href="gallery.html">GALLERY</a></li>
           </ul>
         </nav>
       </div>
@@ -36,55 +36,31 @@
       <div class="container">
         <div class="gallery">
           <a class="gallery-link" href="assets/media/Gallery1.png">
-            <img class="gallery-item" src="assets/media/Gallery1.png"/>
+            <img class="gallery-item" src="assets/media/Gallery1.png" alt="Project 1" />
           </a>
           <a class="gallery-link" href="assets/media/Gallery2.jpg">
-            <img class="gallery-item" src="assets/media/Gallery2.jpg"/>
+            <img class="gallery-item" src="assets/media/Gallery2.jpg" alt="Project 2" />
           </a>
           <a class="gallery-link" href="assets/media/Gallery3.png">
-            <img class="gallery-item" src="assets/media/Gallery3.png"/>
+            <img class="gallery-item" src="assets/media/Gallery3.png" alt="Project 3" />
           </a>
           <a class="gallery-link" href="assets/media/Gallery4.png">
-            <img class="gallery-item" src="assets/media/Gallery4.png"/>
+            <img class="gallery-item" src="assets/media/Gallery4.png" alt="Project 4" />
           </a>
           <a class="gallery-link" href="assets/media/Gallery5.jpg">
-            <img class="gallery-item" src="assets/media/Gallery5.jpg"/>
+            <img class="gallery-item" src="assets/media/Gallery5.jpg" alt="Project 5" />
           </a>
           <a class="gallery-link" href="assets/media/Gallery6.jpg">
-            <img class="gallery-item" src="assets/media/Gallery6.jpg"/>
+            <img class="gallery-item" src="assets/media/Gallery6.jpg" alt="Project 6" />
           </a>
           <a class="gallery-link" href="assets/media/Gallery7.png">
-            <img class="gallery-item" src="assets/media/Gallery7.png"/>
+            <img class="gallery-item" src="assets/media/Gallery7.png" alt="Project 6" />
           </a>
           <a class="gallery-link" href="assets/media/Gallery8.png">
-            <img class="gallery-item" src="assets/media/Gallery8.png"/>
+            <img class="gallery-item" src="assets/media/Gallery8.png" alt="Project 6" />
           </a>
           <a class="gallery-link" href="assets/media/Gallery9.png">
-            <img class="gallery-item" src="assets/media/Gallery9.png"/>
-          </a>
-          <a class="gallery-link" href="assets/media/Gallery10.jpeg">
-            <img class="gallery-item" src="assets/media/Gallery10.jpeg"/>
-          </a>
-          <a class="gallery-link" href="assets/media/Gallery11.jpeg">
-            <img class="gallery-item" src="assets/media/Gallery11.jpeg"/>
-          </a>
-          <a class="gallery-link" href="assets/media/Gallery12.jpeg">
-            <img class="gallery-item" src="assets/media/Gallery12.jpeg"/>
-          </a>
-          <a class="gallery-link" href="assets/media/Gallery13.jpeg">
-            <img class="gallery-item" src="assets/media/Gallery13.jpeg"/>
-          </a>
-          <a class="gallery-link" href="assets/media/Gallery14.jpeg">
-            <img class="gallery-item" src="assets/media/Gallery14.jpeg"/>
-          </a>
-          <a class="gallery-link" href="assets/media/Gallery15.jpeg">
-            <img class="gallery-item" src="assets/media/Gallery15.jpeg"/>
-          </a>
-          <a class="gallery-link" href="assets/media/Gallery16.jpeg">
-            <img class="gallery-item" src="assets/media/Gallery16.jpeg"/>
-          </a>
-          <a class="gallery-link" href="assets/media/Gallery17.png">
-            <img class="gallery-item" src="assets/media/Gallery17.png"/>
+            <img class="gallery-item" src="assets/media/Gallery9.png" alt="Project 6" />
           </a>
         </div>
       </div>
@@ -104,6 +80,7 @@
       <img id="lightbox-img" src="" alt="" />
     </div>
     <script>
+      // Shuffle gallery items each time the page loads so the gallery shows a new order.
       (function(){
         try{
           var gallery = document.querySelector('.gallery');
@@ -114,13 +91,18 @@
             var tmp = items[i]; items[i] = items[j]; items[j] = tmp;
           }
           items.forEach(function(node){ gallery.appendChild(node); });
-        }catch(e){  }
+        }catch(e){ /* ignore */ }
       })();
+
+    </script>
+    <script>
       (function(){
         var links = document.querySelectorAll('.gallery-link');
         var overlay = document.getElementById('lightbox');
         var img = document.getElementById('lightbox-img');
         var closeBtn = document.getElementById('lightbox-close');
+
+        // Preload map to cache hovered images so clicks open instantly
         var _preloaded = new Map();
         function preloadHref(href){
           if(!href) return;
@@ -131,6 +113,7 @@
             _preloaded.set(href, p);
           }catch(e){}
         }
+
         function openLightbox(e){
           e && e.preventDefault && e.preventDefault();
           var src = this.getAttribute('href') || this.querySelector('img').src;
@@ -138,33 +121,39 @@
           overlay.classList.add('open');
           overlay.setAttribute('aria-hidden','false');
           document.body.classList.add('no-scroll');
+          // mark the page so header/nav can be hidden while the lightbox is open
+          document.body.classList.add('lightbox-open');
           closeBtn && closeBtn.focus();
         }
+
         function closeLightbox(){
           overlay.classList.remove('open');
           overlay.setAttribute('aria-hidden','true');
           document.body.classList.remove('no-scroll');
+          document.body.classList.remove('lightbox-open');
           img.src = '';
         }
-          document.body.classList.add('no-scroll');
-          document.body.classList.add('lightbox-open');
+
         links.forEach(function(a){
           a.addEventListener('click', openLightbox);
+          // preload on hover and on first touchstart (mobile)
           a.addEventListener('mouseenter', function(){ preloadHref(a.getAttribute('href')); });
           a.addEventListener('touchstart', function(){ preloadHref(a.getAttribute('href')); }, {passive:true});
         });
-          document.body.classList.remove('no-scroll');
-          document.body.classList.remove('lightbox-open');
+
         overlay.addEventListener('click', function(e){
           try {
             var prevBtn = document.getElementById('lightbox-prev');
             var nextBtn = document.getElementById('lightbox-next');
+            // if clicked directly on overlay background, close
             if(e.target === overlay) { closeLightbox(); return; }
+            // if click is not on the image and not on navigation buttons, close
             if(!img.contains(e.target) && e.target !== prevBtn && e.target !== nextBtn && e.target !== closeBtn){
               closeLightbox();
             }
-          } catch(err) {  }
+          } catch(err) { /* fail-safe: do nothing on errors */ }
         });
+
         closeBtn && closeBtn.addEventListener('click', closeLightbox);
         document.addEventListener('keydown', function(e){ if(e.key==='Escape') closeLightbox(); });
       })();
