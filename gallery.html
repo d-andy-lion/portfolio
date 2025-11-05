@@ -137,6 +137,15 @@
     </script>
     <script>
       (function(){
+        try{
+          window.isVideoUrl = function(u){
+            return typeof u === 'string' && /\.(mp4|webm|ogg)(\?|$)/i.test(u);
+          };
+        }catch(e){}
+      })();
+    </script>
+    <script>
+      (function(){
         var links = document.querySelectorAll('.gallery-link');
         var overlay = document.getElementById('lightbox');
         var img = document.getElementById('lightbox-img');
