@@ -62,6 +62,30 @@
           <a class="gallery-link" href="assets/media/Gallery9.png">
             <img class="gallery-item" src="assets/media/Gallery9.png"/>
           </a>
+          <a class="gallery-link" href="assets/media/Gallery10.jpeg">
+            <img class="gallery-item" src="assets/media/Gallery10.jpeg"/>
+          </a>
+          <a class="gallery-link" href="assets/media/Gallery11.jpeg">
+            <img class="gallery-item" src="assets/media/Gallery11.jpeg"/>
+          </a>
+          <a class="gallery-link" href="assets/media/Gallery12.jpeg">
+            <img class="gallery-item" src="assets/media/Gallery12.jpeg"/>
+          </a>
+          <a class="gallery-link" href="assets/media/Gallery13.jpeg">
+            <img class="gallery-item" src="assets/media/Gallery13.jpeg"/>
+          </a>
+          <a class="gallery-link" href="assets/media/Gallery14.jpeg">
+            <img class="gallery-item" src="assets/media/Gallery14.jpeg"/>
+          </a>
+          <a class="gallery-link" href="assets/media/Gallery15.jpeg">
+            <img class="gallery-item" src="assets/media/Gallery15.jpeg"/>
+          </a>
+          <a class="gallery-link" href="assets/media/Gallery16.jpeg">
+            <img class="gallery-item" src="assets/media/Gallery16.jpeg"/>
+          </a>
+          <a class="gallery-link" href="assets/media/Gallery17.png">
+            <img class="gallery-item" src="assets/media/Gallery17.png"/>
+          </a>
         </div>
       </div>
     </main>
@@ -81,12 +105,22 @@
     </div>
     <script>
       (function(){
+        try{
+          var gallery = document.querySelector('.gallery');
+          if(!gallery) return;
+          var items = Array.prototype.slice.call(gallery.children);
+          for(var i = items.length - 1; i > 0; i--){
+            var j = Math.floor(Math.random() * (i + 1));
+            var tmp = items[i]; items[i] = items[j]; items[j] = tmp;
+          }
+          items.forEach(function(node){ gallery.appendChild(node); });
+        }catch(e){  }
+      })();
+      (function(){
         var links = document.querySelectorAll('.gallery-link');
         var overlay = document.getElementById('lightbox');
         var img = document.getElementById('lightbox-img');
         var closeBtn = document.getElementById('lightbox-close');
-
-        // Preload map to cache hovered images so clicks open instantly
         var _preloaded = new Map();
         function preloadHref(href){
           if(!href) return;
@@ -97,7 +131,6 @@
             _preloaded.set(href, p);
           }catch(e){}
         }
-
         function openLightbox(e){
           e && e.preventDefault && e.preventDefault();
           var src = this.getAttribute('href') || this.querySelector('img').src;
@@ -107,7 +140,6 @@
           document.body.classList.add('no-scroll');
           closeBtn && closeBtn.focus();
         }
-
         function closeLightbox(){
           overlay.classList.remove('open');
           overlay.setAttribute('aria-hidden','true');
