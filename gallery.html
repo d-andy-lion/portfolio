@@ -105,13 +105,11 @@
         </svg>
       </button>
       <img id="lightbox-img" src="" alt="" />
-      <!-- video player for mp4/webm items; hidden by default -->
       <video id="lightbox-video" controls playsinline style="max-width:92%; max-height:86%; border-radius:8px; display:none; background: #000;">
         Your browser does not support the video tag.
       </video>
     </div>
     <script>
-      // Shuffle gallery items each time the page loads so the gallery shows a new order.
       (function(){
         try{
           var gallery = document.querySelector('.gallery');
@@ -122,9 +120,8 @@
             var tmp = items[i]; items[i] = items[j]; items[j] = tmp;
           }
           items.forEach(function(node){ gallery.appendChild(node); });
-        }catch(e){ /* ignore */ }
+        }catch(e){}
       })();
-
     </script>
     <script>
       (function(){
@@ -132,8 +129,6 @@
         var overlay = document.getElementById('lightbox');
         var img = document.getElementById('lightbox-img');
         var closeBtn = document.getElementById('lightbox-close');
-
-        // Preload map to cache hovered images/videos so clicks open instantly
         var _preloaded = new Map();
         function isVideoUrl(u){
           return typeof u === 'string' && /\.(mp4|webm|ogg)(\?|$)/i.test(u);
@@ -154,7 +149,6 @@
             }
           }catch(e){}
         }
-
         function openLightbox(e){
           e && e.preventDefault && e.preventDefault();
           var src = this.getAttribute('href') || this.querySelector('img').src;
@@ -166,22 +160,18 @@
           // decide whether to show image or video
           var videoEl = document.getElementById('lightbox-video');
           if(isVideoUrl(src)){
-            // show video
             try{
               img.style.display = 'none';
               videoEl.style.display = 'block';
               videoEl.src = src;
-              // if user clicked, play is allowed; attempt play and ignore promise
               var p = videoEl.play();
-              if(p && p.catch) p.catch(function(){/* autoplay prevented; user can tap play */});
+              if(p && p.catch) p.catch(function(){});
             }catch(err){
-              // fallback to image view showing nothing
               videoEl.style.display = 'none';
               img.style.display = 'block';
               img.src = '';
             }
           } else {
-            // show image
             try{ videoEl.pause(); videoEl.removeAttribute('src'); videoEl.load(); }catch(e){}
             videoEl.style.display = 'none';
             img.style.display = 'block';
@@ -189,7 +179,6 @@
           }
           closeBtn && closeBtn.focus();
         }
-
         function closeLightbox(){
           overlay.classList.remove('open');
           overlay.setAttribute('aria-hidden','true');
@@ -201,10 +190,8 @@
           }catch(e){}
           img.src = '';
         }
-
         links.forEach(function(a){
           a.addEventListener('click', openLightbox);
-          // preload on hover and on first touchstart (mobile)
           a.addEventListener('mouseenter', function(){ preloadHref(a.getAttribute('href')); });
           a.addEventListener('touchstart', function(){ preloadHref(a.getAttribute('href')); }, {passive:true});
         });
@@ -213,15 +200,12 @@
           try {
             var prevBtn = document.getElementById('lightbox-prev');
             var nextBtn = document.getElementById('lightbox-next');
-            // if clicked directly on overlay background, close
             if(e.target === overlay) { closeLightbox(); return; }
-            // if click is not on the image and not on navigation buttons, close
             if(!img.contains(e.target) && e.target !== prevBtn && e.target !== nextBtn && e.target !== closeBtn){
               closeLightbox();
             }
-          } catch(err) { /* fail-safe: do nothing on errors */ }
+          } catch(err) {}
         });
-
         closeBtn && closeBtn.addEventListener('click', closeLightbox);
         document.addEventListener('keydown', function(e){ if(e.key==='Escape') closeLightbox(); });
       })();
