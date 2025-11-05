@@ -60,10 +60,6 @@ html,body{height:100%;margin:0;font-family:'Proxima Nova', sans-serif;background
 .nav-links{list-style:none;padding:0;margin:0;display:flex;gap:20px;justify-content:center;align-items:center;}
 .nav-spacer { height: 64px; }
 .nav-links a{font-weight:700;color:var(--text);text-decoration:none;display:inline-block;padding:8px 10px;line-height:1.2}
-
-/* When an image lightbox is open we add `lightbox-open` to the body.
-   Hide the header/nav and collapse the nav spacer so the focus is on the image.
-*/
 .lightbox-open .site-header,
 .lightbox-open .nav {
   opacity: 0;
@@ -200,6 +196,7 @@ html,body{height:100%;margin:0;font-family:'Proxima Nova', sans-serif;background
   will-change: transform;
 }
 .work-section .gallery-link:hover .gallery-item { transform: scale(1.035); box-shadow: 0 8px 30px rgba(0,0,0,0.45); }
+.gallery-video-thumb{ display:block; width:100%; height:clamp(160px,18vw,300px); object-fit:cover; border-radius:8px; }
 .lightbox-overlay {
   position: fixed;
   inset: 0;

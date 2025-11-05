@@ -87,7 +87,7 @@
             <img class="gallery-item" src="assets/media/Gallery17.png" />
           </a>
           <a class="gallery-link" href="assets/media/Gallery18.mp4">
-            <img class="gallery-item" src="data:image/svg+xml;utf8,<svg xmlns='http://www.w3.org/2000/svg' viewBox='0 0 800 450'><rect fill='%23000' width='800' height='450'/><polygon fill='%23fff' points='320,225 520,145 520,305'/></svg>" alt="Video thumbnail" />
+            <video class="gallery-item gallery-video-thumb" src="assets/media/Gallery18.mp4" muted autoplay loop playsinline preload="metadata"></video>
           </a>
         </div>
       </div>
@@ -105,9 +105,9 @@
         </svg>
       </button>
       <img id="lightbox-img" src="" alt="" />
-      <video id="lightbox-video" controls playsinline style="max-width:92%; max-height:86%; border-radius:8px; display:none; background: #000;">
-        Your browser does not support the video tag.
-      </video>
+       <video id="lightbox-video" loop muted playsinline autoplay style="max-width:92%; max-height:86%; border-radius:8px; display:none; background: #000;">
+         Your browser does not support the video tag.
+       </video>
     </div>
     <script>
       (function(){
@@ -155,9 +155,7 @@
           overlay.classList.add('open');
           overlay.setAttribute('aria-hidden','false');
           document.body.classList.add('no-scroll');
-          // mark the page so header/nav can be hidden while the lightbox is open
           document.body.classList.add('lightbox-open');
-          // decide whether to show image or video
           var videoEl = document.getElementById('lightbox-video');
           if(isVideoUrl(src)){
             try{
@@ -186,7 +184,13 @@
           document.body.classList.remove('lightbox-open');
           try{
             var videoEl = document.getElementById('lightbox-video');
-            if(videoEl){ videoEl.pause(); videoEl.removeAttribute('src'); videoEl.load(); videoEl.style.display = 'none'; }
+            if(videoEl){
+              videoEl.dataset.allowPause = 'true';
+              videoEl.pause();
+              try{ videoEl.removeAttribute('src'); videoEl.load(); }catch(e){}
+              videoEl.style.display = 'none';
+              delete videoEl.dataset.allowPause;
+            }
           }catch(e){}
           img.src = '';
         }
@@ -314,6 +318,28 @@
         }
         prev && prev.addEventListener('click', function(e){ e.stopPropagation(); var cur = Number(overlay.dataset.currentIndex || 0); showAt(cur - 1); });
         next && next.addEventListener('click', function(e){ e.stopPropagation(); var cur = Number(overlay.dataset.currentIndex || 0); showAt(cur + 1); });
+      })();
+    </script>
+    <script>
+      (function(){
+        try{
+          var lightboxVideo = document.getElementById('lightbox-video');
+          if(lightboxVideo){
+            lightboxVideo.addEventListener('pause', function(){
+              if(this.dataset.allowPause === 'true') return;
+              var p = this.play(); if(p && p.catch) p.catch(function(){});
+            });
+            lightboxVideo.muted = true; lightboxVideo.loop = true; lightboxVideo.playsInline = true;
+          }
+          var thumbs = document.querySelectorAll('.gallery-video-thumb');
+          thumbs.forEach(function(v){
+            try{
+              v.muted = true; v.loop = true; v.playsInline = true; v.autoplay = true; v.preload = 'metadata';
+              v.addEventListener('pause', function(){ var p = this.play(); if(p && p.catch) p.catch(function(){}); });
+              var p = v.play(); if(p && p.catch) p.catch(function(){});
+            }catch(e){}
+          });
+        }catch(e){}
       })();
     </script>
   </body>
