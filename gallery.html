@@ -75,9 +75,11 @@
             <img class="gallery-item" loading="lazy" src="assets/media/Gallery17.png" />
           </a>
           <a class="gallery-link" href="assets/media/Gallery18.mp4">
+            <img class="gallery-item thumb-poster" data-poster-base="assets/media/Gallery18" alt="" aria-hidden="true" />
             <video class="gallery-item gallery-video-thumb" data-src="assets/media/Gallery18.mp4" muted loop playsinline preload="none"></video>
           </a>
           <a class="gallery-link" href="assets/media/Gallery19.mp4">
+            <img class="gallery-item thumb-poster" data-poster-base="assets/media/Gallery19" alt="" aria-hidden="true" />
             <video class="gallery-item gallery-video-thumb" data-src="assets/media/Gallery19.mp4" muted loop playsinline preload="none"></video>
           </a>
           <a class="gallery-link" href="assets/media/Gallery20.JPG">
@@ -108,6 +110,7 @@
             <img class="gallery-item" src="assets/media/Gallery28.jpg" />
           </a>
           <a class="gallery-link" href="assets/media/Gallery29.mp4">
+            <img class="gallery-item thumb-poster" data-poster-base="assets/media/Gallery29" alt="" aria-hidden="true" />
             <video class="gallery-item gallery-video-thumb" data-src="assets/media/Gallery29.mp4" muted loop playsinline preload="none"></video>
           </a>
         </div>
@@ -368,6 +371,7 @@
     <script>
       (function(){
         try{
+          // Interaction-driven thumbnail playback with static poster fallback.
           var lightboxVideo = document.getElementById('lightbox-video');
           if(lightboxVideo){
             lightboxVideo.addEventListener('pause', function(){
@@ -378,63 +382,88 @@
           }
           var thumbs = Array.prototype.slice.call(document.querySelectorAll('.gallery-video-thumb'));
           thumbs.forEach(function(v){ try{ v.muted = true; v.loop = true; v.playsInline = true; v.preload = 'none'; }catch(e){} });
-          var MAX_PLAYING = 2;
-          function loadAndPlayThumb(v){
+          function trySetPosterImage(imgEl, basePath){
+            var exts = ['.png','.jpg','.jpeg','.webp'];
+            var i = 0;
+            function tryNext(){
+              if(i >= exts.length) return;
+              var candidate = basePath + exts[i++];
+              var tester = new Image();
+              tester.onload = function(){ imgEl.src = candidate; };
+              tester.onerror = tryNext;
+              tester.src = candidate;
+            }
+            tryNext();
+          }
+          thumbs.forEach(function(v){
+            try{
+              var parent = v.parentNode;
+              if(!parent) return;
+              var poster = parent.querySelector('.thumb-poster');
+              if(poster && !poster.getAttribute('src')){
+                var base = poster.dataset.posterBase || (v.dataset.src || '').replace(/\.(mp4|webm|ogg)(\?|$)/i, '');
+                if(base) trySetPosterImage(poster, base);
+              }
+            }catch(e){}
+          });
+          var MAX_PLAYING = 1;
+          var playing = new Set();
+          function loadThumb(v){
             try{
               var src = v.dataset.src || v.getAttribute('data-src');
               if(!v.src && src){ v.src = src; try{ v.load(); }catch(e){} }
-              var p = v.play(); if(p && p.catch) p.catch(function(){});
             }catch(e){}
           }
-          function pauseAndUnloadThumb(v){
+          function unloadThumb(v){
             try{
               v.pause(); v.currentTime = 0;
               if(v.src){ v.removeAttribute('src'); try{ v.load(); }catch(e){} }
             }catch(e){}
           }
-          if('IntersectionObserver' in window){
-            var visible = new Map();
-            var io = new IntersectionObserver(function(entries){
-              entries.forEach(function(entry){
-                var v = entry.target;
-                var ratio = entry.intersectionRatio || 0;
-                if(ratio > 0){
-                  visible.set(v, ratio);
-                } else {
-                  visible.delete(v);
-                  pauseAndUnloadThumb(v);
-                }
-              });
-              var sorted = Array.prototype.slice.call(visible.entries()).sort(function(a,b){ return b[1] - a[1]; }).map(function(pair){ return pair[0]; });
-              var toPlay = new Set(sorted.slice(0, MAX_PLAYING));
-              thumbs.forEach(function(v){
-                if(toPlay.has(v)){
-                  loadAndPlayThumb(v);
-                } else {
-                  pauseAndUnloadThumb(v);
-                }
-              });
-            }, { root: null, rootMargin: '0px 0px -10% 0px', threshold: [0, 0.25, 0.5, 0.75, 1] });
-            thumbs.forEach(function(v){ io.observe(v); });
-          } else {
-            var playing = new Set();
-            function tryPlay(v){
-              if(playing.size >= MAX_PLAYING) return;
-              loadAndPlayThumb(v);
-              playing.add(v);
-            }
-            function stopPlay(v){
-              pauseAndUnloadThumb(v);
-              playing.delete(v);
-            }
-            thumbs.forEach(function(v){
-              try{
-                v.addEventListener('pointerenter', function(){ tryPlay(v); });
-                v.addEventListener('pointerleave', function(){ stopPlay(v); });
-                v.addEventListener('touchstart', function(){ tryPlay(v); }, {passive:true});
-              }catch(e){}
-            });
+          function showPosterFor(v){
+            try{ var p = v.parentNode && v.parentNode.querySelector('.thumb-poster'); if(p) p.style.opacity = '1'; }catch(e){}
           }
+          function hidePosterFor(v){
+            try{ var p = v.parentNode && v.parentNode.querySelector('.thumb-poster'); if(p) p.style.opacity = '0'; }catch(e){}
+          }
+          function tryPlay(v){
+            if(playing.has(v)) return;
+            if(playing.size >= MAX_PLAYING){
+              playing.forEach(function(pv){ unloadThumb(pv); showPosterFor(pv); playing.delete(pv); });
+            }
+            loadThumb(v);
+            try{ var p = v.play(); if(p && p.catch) p.catch(function(){}); }catch(e){}
+            hidePosterFor(v);
+            playing.add(v);
+          }
+          function stopPlay(v){
+            if(!playing.has(v)) return;
+            unloadThumb(v);
+            showPosterFor(v);
+            playing.delete(v);
+          }
+          thumbs.forEach(function(v){
+            try{
+              var parent = v.parentNode || v.closest('.gallery-link');
+              var attachTargets = [v];
+              if(parent) attachTargets.push(parent);
+              attachTargets.forEach(function(t){
+                t.addEventListener('pointerenter', function(){ tryPlay(v); });
+                t.addEventListener('pointerleave', function(){ stopPlay(v); });
+                t.addEventListener('touchstart', function(e){ e.stopPropagation(); if(playing.has(v)){ stopPlay(v); } else { tryPlay(v); } }, {passive:true});
+                t.addEventListener('touchend', function(){ stopPlay(v); }, {passive:true});
+              });
+              if(parent){
+                parent.addEventListener('focus', function(){ tryPlay(v); }, true);
+                parent.addEventListener('blur', function(){ stopPlay(v); }, true);
+              }
+            }catch(e){}
+          });
+          if('IntersectionObserver' in window){
+            var io = new IntersectionObserver(function(entries){ entries.forEach(function(entry){ if(!entry.isIntersecting) stopPlay(entry.target); }); }, {root:null, threshold:[0]});
+            thumbs.forEach(function(v){ io.observe(v); });
+          }
+          document.addEventListener('visibilitychange', function(){ if(document.visibilityState !== 'visible'){ thumbs.forEach(function(v){ stopPlay(v); }); } });
         }catch(e){}
       })();
     </script>
