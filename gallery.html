@@ -382,18 +382,44 @@
           }
           var thumbs = Array.prototype.slice.call(document.querySelectorAll('.gallery-video-thumb'));
           thumbs.forEach(function(v){ try{ v.muted = true; v.loop = true; v.playsInline = true; v.preload = 'none'; }catch(e){} });
+          var _captureIndex = 0;
           function trySetPosterImage(imgEl, basePath){
-            var exts = ['.png','.jpg','.jpeg','.webp'];
-            var i = 0;
-            function tryNext(){
-              if(i >= exts.length) return;
-              var candidate = basePath + exts[i++];
-              var tester = new Image();
-              tester.onload = function(){ imgEl.src = candidate; };
-              tester.onerror = tryNext;
-              tester.src = candidate;
-            }
-            tryNext();
+            try{
+              if(imgEl.getAttribute('src')) return;
+              var parent = imgEl.parentNode;
+              var vidEl = parent && parent.querySelector('video');
+              var vidSrc = (vidEl && vidEl.dataset && vidEl.dataset.src) || (basePath ? basePath + '.mp4' : null);
+              if(!vidSrc) return;
+              var delay = (_captureIndex++) * 120;
+              setTimeout(function(){ captureFrameFromVideoSimple(vidSrc, imgEl); }, delay);
+            }catch(e){}
+          }
+          function captureFrameFromVideoSimple(src, imgEl, seekTime){
+            seekTime = typeof seekTime === 'number' ? seekTime : 0.5;
+            try{
+              var v = document.createElement('video');
+              v.muted = true; v.playsInline = true; v.preload = 'metadata';
+              v.src = src;
+              var cleaned = false;
+              function cleanUp(){ if(cleaned) return; cleaned = true; try{ v.pause(); v.removeAttribute('src'); v.load(); }catch(e){} }
+              v.addEventListener('loadedmetadata', function(){
+                try{ var t = Math.min(seekTime, (v.duration || seekTime)); v.currentTime = t; }catch(e){}
+              });
+              v.addEventListener('seeked', function(){
+                try{
+                  var w = v.videoWidth || 320; var h = v.videoHeight || 180;
+                  var targetW = Math.min(480, w);
+                  var targetH = Math.round((targetW / w) * h) || 180;
+                  var c = document.createElement('canvas'); c.width = targetW; c.height = targetH;
+                  var ctx = c.getContext('2d');
+                  try{ ctx.drawImage(v, 0, 0, targetW, targetH); var data = c.toDataURL('image/jpeg', 0.8); imgEl.src = data; }catch(e){}
+                }catch(e){}
+                cleanUp();
+              });
+              v.addEventListener('error', function(){ cleanUp(); });
+              try{ v.load(); }catch(e){}
+              setTimeout(cleanUp, 4000);
+            }catch(err){}
           }
           thumbs.forEach(function(v){
             try{
