@@ -114,18 +114,15 @@
       </div>
     </main>
       <script>
-        // Shuffle gallery items on load using Fisher-Yates so order is random each page visit.
         (function(){
           try{
             var gallery = document.querySelector('.gallery');
             if(!gallery) return;
             var items = Array.prototype.slice.call(gallery.children);
-            // Fisher-Yates shuffle
             for(var i = items.length - 1; i > 0; i--){
               var j = Math.floor(Math.random() * (i + 1));
               var tmp = items[i]; items[i] = items[j]; items[j] = tmp;
             }
-            // Re-append in shuffled order
             items.forEach(function(node){ gallery.appendChild(node); });
           }catch(e){}
         })();
