@@ -195,6 +195,8 @@ html,body{height:100%;margin:0;font-family:'Proxima Nova', sans-serif;background
   padding-top: 100%;
   border-radius: 8px;
   overflow: hidden;
+  box-shadow: 0 0 0 1px rgba(255,255,255,0.12);
+  transition: box-shadow 160ms ease, transform 120ms ease;
 }
 .work-section .gallery-item {
   position: absolute;
@@ -211,6 +213,8 @@ html,body{height:100%;margin:0;font-family:'Proxima Nova', sans-serif;background
   will-change: transform;
 }
 .work-section .gallery-link:hover .gallery-item { transform: scale(1.035); box-shadow: 0 8px 30px rgba(0,0,0,0.45); }
+.work-section .gallery-link:hover { box-shadow: 0 0 0 1px rgba(255,255,255,0.9), 0 10px 30px rgba(0,0,0,0.45); }
+.work-section .gallery-link:focus { box-shadow: 0 0 0 2px rgba(255,255,255,0.95); outline: none; }
 .gallery-video-thumb{ position:absolute; top:0; left:0; right:0; bottom:0; width:100%; height:100%; display:block; object-fit:cover; border-radius:0; }
 .lightbox-overlay {
   position: fixed;
