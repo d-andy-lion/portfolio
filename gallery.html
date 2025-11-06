@@ -143,16 +143,24 @@
           if(i >= links.length) i = 0;
           overlay.dataset.currentIndex = String(i);
           var src = links[i].getAttribute('href') || (links[i].querySelector('img') && links[i].querySelector('img').src);
-          if(src){
-            var videoEl = document.getElementById('lightbox-video');
-            if(isVideoUrl(src)){
-              try{ img.style.display='none'; videoEl.style.display='block'; videoEl.src = src; var p = videoEl.play(); if(p && p.catch) p.catch(function(){}); }catch(e){ videoEl.style.display='none'; img.style.display='block'; img.src = ''; }
-            } else {
-              try{ if(videoEl){ videoEl.pause(); videoEl.removeAttribute('src'); videoEl.load(); videoEl.style.display='none'; } }catch(e){}
-              videoEl && (videoEl.style.display='none');
-              img.style.display='block';
-              img.src = src;
+          if(!src) return;
+          var resolved = (function(s){ try{ return new URL(s, location.href).href; }catch(e){ return s; } })(src);
+          var videoEl = document.getElementById('lightbox-video');
+          try{ console.debug && console.debug('lightbox showAt', i, resolved, 'isVideo?', isVideoUrl(resolved)); }catch(e){}
+          if(isVideoUrl(resolved)){
+            try{
+              img.style.display = 'none';
+              videoEl.style.display = 'block';
+              try{ videoEl.pause(); }catch(e){}
+              videoEl.src = resolved;
+              try{ videoEl.load(); }catch(e){}
+              var p = videoEl.play(); if(p && p.catch) p.catch(function(){});
+            }catch(e){
+              try{ videoEl.style.display='none'; img.style.display='block'; img.src = ''; }catch(_){}
             }
+          } else {
+            try{ if(videoEl){ try{ videoEl.pause(); }catch(e){} videoEl.removeAttribute('src'); try{ videoEl.load(); }catch(e){} videoEl.style.display='none'; } }catch(e){}
+            try{ img.style.display = 'block'; img.src = resolved; }catch(e){}
           }
         }
   try{ window.showAt = showAt; }catch(e){}
