@@ -108,7 +108,7 @@
             <img class="gallery-item" src="assets/media/Gallery28.jpg" />
           </a>
           <a class="gallery-link" href="assets/media/Gallery29.mp4">
-            <video class="gallery-item gallery-video-thumb" src="assets/media/Gallery29.mp4" muted autoplay loop playsinline preload="metadata"></video>
+            <video class="gallery-item gallery-video-thumb" data-src="assets/media/Gallery29.mp4" muted loop playsinline preload="none"></video>
           </a>
         </div>
       </div>
@@ -377,6 +377,16 @@
             lightboxVideo.muted = true; lightboxVideo.loop = true; lightboxVideo.playsInline = true;
           }
           var thumbs = Array.prototype.slice.call(document.querySelectorAll('.gallery-video-thumb'));
+          // Normalize: if any thumbnail has a live src (left from legacy markup), move it
+          // to data-src so the lazy-load/unload logic can manage it consistently.
+          thumbs.forEach(function(v){
+            try{
+              if(!v.dataset.src){
+                var cur = v.getAttribute('src');
+                if(cur){ v.setAttribute('data-src', cur); v.removeAttribute('src'); }
+              }
+            }catch(e){}
+          });
           function loadAndPlayThumb(v){
             try{
               var src = v.dataset.src || v.getAttribute('data-src');
