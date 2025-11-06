@@ -24,70 +24,70 @@
       <div class="container">
         <div class="gallery">
           <a class="gallery-link" href="assets/media/Gallery1.png">
-            <img class="gallery-item" src="assets/media/Gallery1.png" />
+            <img class="gallery-item" loading="lazy" src="assets/media/Gallery1.png" />
           </a>
           <a class="gallery-link" href="assets/media/Gallery2.jpg">
-            <img class="gallery-item" src="assets/media/Gallery2.jpg" />
+            <img class="gallery-item" loading="lazy" src="assets/media/Gallery2.jpg" />
           </a>
           <a class="gallery-link" href="assets/media/Gallery3.png">
-            <img class="gallery-item" src="assets/media/Gallery3.png" />
+            <img class="gallery-item" loading="lazy" src="assets/media/Gallery3.png" />
           </a>
           <a class="gallery-link" href="assets/media/Gallery4.png">
-            <img class="gallery-item" src="assets/media/Gallery4.png" />
+            <img class="gallery-item" loading="lazy" src="assets/media/Gallery4.png" />
           </a>
           <a class="gallery-link" href="assets/media/Gallery5.jpg">
-            <img class="gallery-item" src="assets/media/Gallery5.jpg" />
+            <img class="gallery-item" loading="lazy" src="assets/media/Gallery5.jpg" />
           </a>
           <a class="gallery-link" href="assets/media/Gallery6.jpg">
-            <img class="gallery-item" src="assets/media/Gallery6.jpg" />
+            <img class="gallery-item" loading="lazy" src="assets/media/Gallery6.jpg" />
           </a>
           <a class="gallery-link" href="assets/media/Gallery7.png">
-            <img class="gallery-item" src="assets/media/Gallery7.png" />
+            <img class="gallery-item" loading="lazy" src="assets/media/Gallery7.png" />
           </a>
           <a class="gallery-link" href="assets/media/Gallery8.png">
-            <img class="gallery-item" src="assets/media/Gallery8.png" />
+            <img class="gallery-item" loading="lazy" src="assets/media/Gallery8.png" />
           </a>
           <a class="gallery-link" href="assets/media/Gallery9.png">
-            <img class="gallery-item" src="assets/media/Gallery9.png" />
+            <img class="gallery-item" loading="lazy" src="assets/media/Gallery9.png" />
           </a>
           <a class="gallery-link" href="assets/media/Gallery10.jpg">
-            <img class="gallery-item" src="assets/media/Gallery10.jpg" />
+            <img class="gallery-item" loading="lazy" src="assets/media/Gallery10.jpg" />
           </a>
           <a class="gallery-link" href="assets/media/Gallery11.jpeg">
-            <img class="gallery-item" src="assets/media/Gallery11.jpeg" />
+            <img class="gallery-item" loading="lazy" src="assets/media/Gallery11.jpeg" />
           </a>
           <a class="gallery-link" href="assets/media/Gallery12.jpeg">
-            <img class="gallery-item" src="assets/media/Gallery12.jpeg" />
+            <img class="gallery-item" loading="lazy" src="assets/media/Gallery12.jpeg" />
           </a>
           <a class="gallery-link" href="assets/media/Gallery13.jpeg">
-            <img class="gallery-item" src="assets/media/Gallery13.jpeg" />
+            <img class="gallery-item" loading="lazy" src="assets/media/Gallery13.jpeg" />
           </a>
           <a class="gallery-link" href="assets/media/Gallery14.jpeg">
-            <img class="gallery-item" src="assets/media/Gallery14.jpeg" />
+            <img class="gallery-item" loading="lazy" src="assets/media/Gallery14.jpeg" />
           </a>
           <a class="gallery-link" href="assets/media/Gallery15.jpeg">
-            <img class="gallery-item" src="assets/media/Gallery15.jpeg" />
+            <img class="gallery-item" loading="lazy" src="assets/media/Gallery15.jpeg" />
           </a>
           <a class="gallery-link" href="assets/media/Gallery16.jpeg">
-            <img class="gallery-item" src="assets/media/Gallery16.jpeg" />
+            <img class="gallery-item" loading="lazy" src="assets/media/Gallery16.jpeg" />
           </a>
           <a class="gallery-link" href="assets/media/Gallery17.png">
-            <img class="gallery-item" src="assets/media/Gallery17.png" />
+            <img class="gallery-item" loading="lazy" src="assets/media/Gallery17.png" />
           </a>
           <a class="gallery-link" href="assets/media/Gallery18.mp4">
-            <video class="gallery-item gallery-video-thumb" src="assets/media/Gallery18.mp4" muted autoplay loop playsinline preload="metadata"></video>
+            <video class="gallery-item gallery-video-thumb" src="assets/media/Gallery18.mp4" muted loop playsinline preload="metadata"></video>
           </a>
           <a class="gallery-link" href="assets/media/Gallery19.mp4">
-            <video class="gallery-item gallery-video-thumb" src="assets/media/Gallery19.mp4" muted autoplay loop playsinline preload="metadata"></video>
+            <video class="gallery-item gallery-video-thumb" src="assets/media/Gallery19.mp4" muted loop playsinline preload="metadata"></video>
           </a>
           <a class="gallery-link" href="assets/media/Gallery20.JPG">
-            <img class="gallery-item" src="assets/media/Gallery20.JPG" />
+            <img class="gallery-item" loading="lazy" src="assets/media/Gallery20.JPG" />
           </a>
           <a class="gallery-link" href="assets/media/Gallery21.png">
-            <img class="gallery-item" src="assets/media/Gallery21.png" />
+            <img class="gallery-item" loading="lazy" src="assets/media/Gallery21.png" />
           </a>
           <a class="gallery-link" href="assets/media/Gallery22.png">
-            <img class="gallery-item" src="assets/media/Gallery22.png" />
+            <img class="gallery-item" loading="lazy" src="assets/media/Gallery22.png" />
           </a>
           <a class="gallery-link" href="assets/media/Gallery23.jpeg">
             <img class="gallery-item" src="assets/media/Gallery23.jpeg" />
@@ -379,9 +379,10 @@
           var thumbs = document.querySelectorAll('.gallery-video-thumb');
           thumbs.forEach(function(v){
             try{
-              v.muted = true; v.loop = true; v.playsInline = true; v.autoplay = true; v.preload = 'metadata';
-              v.addEventListener('pause', function(){ var p = this.play(); if(p && p.catch) p.catch(function(){}); });
-              var p = v.play(); if(p && p.catch) p.catch(function(){});
+              v.muted = true; v.loop = true; v.playsInline = true; v.preload = 'metadata';
+              v.addEventListener('pointerenter', function(){ try{ var p = v.play(); if(p && p.catch) p.catch(function(){}); }catch(e){} });
+              v.addEventListener('pointerleave', function(){ try{ v.pause(); v.currentTime = 0; }catch(e){} });
+              v.addEventListener('touchstart', function(){ try{ var p = v.play(); if(p && p.catch) p.catch(function(){}); }catch(e){} }, {passive:true});
             }catch(e){}
           });
         }catch(e){}
