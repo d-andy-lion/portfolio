@@ -155,6 +155,8 @@
             }
           }
         }
+  // expose to other scripts
+  try{ window.showAt = showAt; }catch(e){}
         prev && prev.addEventListener('click', function(e){
           e.stopPropagation();
           var cur = Number(overlay.dataset.currentIndex || 0);
