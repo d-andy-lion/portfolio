@@ -267,10 +267,10 @@ html,body{height:100%;margin:0;font-family:'Proxima Nova', sans-serif;background
 }
 @media (max-width: 420px) {
   .modal {
-    aspect-ratio: auto;
-    width: calc(100% - 32px);
-    max-height: 86vh;
+    width: min(calc(100% - 32px), 86vh);
+    aspect-ratio: 1 / 1;
     padding: 16px;
+    max-height: none;
   }
   .modal h2 { font-size: 1.1rem; }
   .modal ul { font-size: 1rem; line-height: 1.45; }
