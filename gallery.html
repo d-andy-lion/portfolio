@@ -155,7 +155,6 @@
             }
           }
         }
-  // expose to other scripts
   try{ window.showAt = showAt; }catch(e){}
         prev && prev.addEventListener('click', function(e){
           e.stopPropagation();
@@ -203,13 +202,11 @@
     </script>
         <script>
           (function(){
-            // Reattach click handlers so clicking a gallery link opens the lightbox overlay
             try{
               var links = Array.prototype.slice.call(document.querySelectorAll('.gallery-link'));
               var overlay = document.getElementById('lightbox');
               var closeBtn = document.getElementById('lightbox-close');
               if(!overlay || !links.length) return;
-
               function openLightbox(e){
                 try{
                   e && e.preventDefault && e.preventDefault();
@@ -219,30 +216,24 @@
                   overlay.setAttribute('aria-hidden','false');
                   document.body.classList.add('no-scroll');
                   document.body.classList.add('lightbox-open');
-                  // Ensure the global showAt (defined earlier) is used to display
                   if(typeof showAt === 'function') showAt(idx);
                   if(closeBtn) closeBtn.focus();
                 }catch(err){}
               }
-
               function closeLightbox(){
                 try{
                   overlay.classList.remove('open');
                   overlay.setAttribute('aria-hidden','true');
                   document.body.classList.remove('no-scroll');
                   document.body.classList.remove('lightbox-open');
-                  // clear lightbox video src if present
                   var videoEl = document.getElementById('lightbox-video');
                   if(videoEl){ try{ videoEl.pause(); videoEl.removeAttribute('src'); videoEl.load(); videoEl.style.display='none'; }catch(e){} }
                   var imgEl = document.getElementById('lightbox-img'); if(imgEl) imgEl.src = '';
                 }catch(err){}
               }
-
               links.forEach(function(a){ a.addEventListener('click', openLightbox); });
-
               overlay.addEventListener('click', function(e){ if(e.target === overlay) closeLightbox(); });
               closeBtn && closeBtn.addEventListener('click', closeLightbox);
-
               document.addEventListener('keydown', function(e){
                 if(!overlay.classList.contains('open')) return;
                 if(e.key === 'Escape') { closeLightbox(); }
