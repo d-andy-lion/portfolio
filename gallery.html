@@ -166,51 +166,30 @@
         }
   try{ window.showAt = showAt; }catch(e){}
         prev && prev.addEventListener('click', function(e){
-          e.stopPropagation();
-          var cur = Number(overlay.dataset.currentIndex || 0);
-          var videoEl = document.getElementById('lightbox-video');
-          var imgElShown = document.getElementById('lightbox-img');
-          var currentSrc = (videoEl && videoEl.style.display !== 'none') ? videoEl.src : (imgElShown && imgElShown.src);
-          var currentAbs = currentSrc ? String(currentSrc) : '';
-          var needFind = !overlay.dataset.currentIndex || !(links[cur] && (new URL(links[cur].getAttribute('href') || '', location.href).href === currentAbs || (links[cur].querySelector('img') && links[cur].querySelector('img').src === currentAbs) || (links[cur].querySelector('video') && links[cur].querySelector('video').src === currentAbs)));
-          if(needFind){
-            var found = -1;
-            for(var i=0;i<links.length;i++){
-              var href = links[i].getAttribute('href');
-              var linkAbs = href ? new URL(href, location.href).href : '';
-              var liImg = links[i].querySelector('img');
-              var liVid = links[i].querySelector('video');
-              if(linkAbs === currentAbs || (liImg && liImg.src === currentAbs) || (liVid && liVid.src === currentAbs)) { found = i; break; }
-            }
-            if(found >= 0) cur = found;
-          }
-          showAt(cur - 1);
+          e && e.stopPropagation && e.stopPropagation();
+          try{
+            var linksNow = document.querySelectorAll('.gallery-link');
+            var len = linksNow ? linksNow.length : 0;
+            if(!len) return;
+            var cur = Number(overlay.dataset.currentIndex || 0);
+            var nextIdx = ( (cur - 1) % len + len ) % len;
+            if(typeof window.showAt === 'function') window.showAt(nextIdx); else showAt && showAt(nextIdx);
+          }catch(err){}
         });
         next && next.addEventListener('click', function(e){
-          e.stopPropagation();
-          var cur = Number(overlay.dataset.currentIndex || 0);
-          var videoEl = document.getElementById('lightbox-video');
-          var imgElShown = document.getElementById('lightbox-img');
-          var currentSrc = (videoEl && videoEl.style.display !== 'none') ? videoEl.src : (imgElShown && imgElShown.src);
-          var currentAbs = currentSrc ? String(currentSrc) : '';
-          var needFind = !overlay.dataset.currentIndex || !(links[cur] && (new URL(links[cur].getAttribute('href') || '', location.href).href === currentAbs || (links[cur].querySelector('img') && links[cur].querySelector('img').src === currentAbs) || (links[cur].querySelector('video') && links[cur].querySelector('video').src === currentAbs)));
-          if(needFind){
-            var found = -1;
-            for(var i=0;i<links.length;i++){
-              var href = links[i].getAttribute('href');
-              var linkAbs = href ? new URL(href, location.href).href : '';
-              var liImg = links[i].querySelector('img');
-              var liVid = links[i].querySelector('video');
-              if(linkAbs === currentAbs || (liImg && liImg.src === currentAbs) || (liVid && liVid.src === currentAbs)) { found = i; break; }
-            }
-            if(found >= 0) cur = found;
-          }
-          showAt(cur + 1);
+          e && e.stopPropagation && e.stopPropagation();
+          try{
+            var linksNow = document.querySelectorAll('.gallery-link');
+            var len = linksNow ? linksNow.length : 0;
+            if(!len) return;
+            var cur = Number(overlay.dataset.currentIndex || 0);
+            var nextIdx = (cur + 1) % len;
+            if(typeof window.showAt === 'function') window.showAt(nextIdx); else showAt && showAt(nextIdx);
+          }catch(err){}
         });
       })();
     </script>
     <script>
-      // Override/ensure a robust global showAt that reliably displays images/videos in the lightbox.
       (function(){
         try{
           window.showAt = function(i){
