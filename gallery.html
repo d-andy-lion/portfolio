@@ -129,6 +129,7 @@
        <video id="lightbox-video" loop muted playsinline autoplay style="max-width:92%; max-height:86%; border-radius:8px; display:none; background: #000;">
          Your browser does not support the video tag.
        </video>
+      <div id="lightbox-caption" aria-hidden="true" style="position:absolute;bottom:18px;left:50%;transform:translateX(-50%);color:#fff;background:rgba(0,0,0,0.5);padding:6px 10px;border-radius:6px;font-size:13px;display:none;z-index:4003"></div>
     </div>
     <script>
       (function(){
@@ -206,6 +207,52 @@
           }
           showAt(cur + 1);
         });
+      })();
+    </script>
+    <script>
+      // Override/ensure a robust global showAt that reliably displays images/videos in the lightbox.
+      (function(){
+        try{
+          window.showAt = function(i){
+            try{
+              var links = Array.prototype.slice.call(document.querySelectorAll('.gallery-link'));
+              var overlay = document.getElementById('lightbox');
+              var img = document.getElementById('lightbox-img');
+              var videoEl = document.getElementById('lightbox-video');
+              var caption = document.getElementById('lightbox-caption');
+              if(!links || links.length === 0) return;
+              if(i < 0) i = links.length - 1;
+              if(i >= links.length) i = 0;
+              overlay.dataset.currentIndex = String(i);
+              var src = links[i].getAttribute('href') || (links[i].querySelector('img') && links[i].querySelector('img').src);
+              if(!src) return;
+              var resolved = (function(s){ try{ return new URL(s, location.href).href; }catch(e){ return s; } })(src);
+              if(caption){ caption.textContent = resolved; caption.style.display = 'block'; }
+              function hideCaption(){ try{ if(caption) caption.style.display = 'none'; }catch(e){} }
+              if(/\.(mp4|webm|ogg)(\?|$)/i.test(resolved)){
+                try{
+                  img.style.display = 'none';
+                  videoEl.style.display = 'block';
+                  try{ videoEl.muted = true; }catch(e){}
+                  try{ videoEl.pause(); }catch(e){}
+                  videoEl.onerror = function(){ try{ if(caption) caption.textContent = 'Failed to load video: ' + resolved; caption.style.display = 'block'; }catch(e){} };
+                  videoEl.oncanplay = function(){ hideCaption(); };
+                  videoEl.src = resolved;
+                  try{ videoEl.load(); }catch(e){}
+                  var p = videoEl.play(); if(p && p.catch) p.catch(function(){});
+                }catch(e){ try{ videoEl.style.display='none'; img.style.display='block'; img.src = ''; if(caption) caption.textContent = 'Error showing video'; }catch(_){} }
+              } else {
+                try{ if(videoEl){ try{ videoEl.pause(); }catch(e){} videoEl.removeAttribute('src'); try{ videoEl.load(); }catch(e){} videoEl.style.display='none'; } }catch(e){}
+                try{
+                  img.style.display = 'block';
+                  img.onload = hideCaption;
+                  img.onerror = function(){ try{ if(caption) caption.textContent = 'Failed to load image: ' + resolved; caption.style.display = 'block'; }catch(e){} };
+                  img.src = resolved;
+                }catch(e){}
+              }
+            }catch(err){}
+          };
+        }catch(e){}
       })();
     </script>
         <script>
