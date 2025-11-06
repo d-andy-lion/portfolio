@@ -377,10 +377,12 @@
             lightboxVideo.muted = true; lightboxVideo.loop = true; lightboxVideo.playsInline = true;
           }
           var thumbs = Array.prototype.slice.call(document.querySelectorAll('.gallery-video-thumb'));
+          thumbs.forEach(function(v){ try{ v.muted = true; v.loop = true; v.playsInline = true; v.preload = 'none'; }catch(e){} });
+          var MAX_PLAYING = 2;
           function loadAndPlayThumb(v){
             try{
               var src = v.dataset.src || v.getAttribute('data-src');
-              if(!v.src && src){ v.src = src; v.load(); }
+              if(!v.src && src){ v.src = src; try{ v.load(); }catch(e){} }
               var p = v.play(); if(p && p.catch) p.catch(function(){});
             }catch(e){}
           }
@@ -391,24 +393,45 @@
             }catch(e){}
           }
           if('IntersectionObserver' in window){
+            var visible = new Map();
             var io = new IntersectionObserver(function(entries){
               entries.forEach(function(entry){
                 var v = entry.target;
-                if(entry.isIntersecting && entry.intersectionRatio > 0.4){
+                var ratio = entry.intersectionRatio || 0;
+                if(ratio > 0){
+                  visible.set(v, ratio);
+                } else {
+                  visible.delete(v);
+                  pauseAndUnloadThumb(v);
+                }
+              });
+              var sorted = Array.prototype.slice.call(visible.entries()).sort(function(a,b){ return b[1] - a[1]; }).map(function(pair){ return pair[0]; });
+              var toPlay = new Set(sorted.slice(0, MAX_PLAYING));
+              thumbs.forEach(function(v){
+                if(toPlay.has(v)){
                   loadAndPlayThumb(v);
                 } else {
                   pauseAndUnloadThumb(v);
                 }
               });
-            }, { root: null, rootMargin: '0px', threshold: [0, 0.4, 0.8] });
+            }, { root: null, rootMargin: '0px 0px -10% 0px', threshold: [0, 0.25, 0.5, 0.75, 1] });
             thumbs.forEach(function(v){ io.observe(v); });
           } else {
+            var playing = new Set();
+            function tryPlay(v){
+              if(playing.size >= MAX_PLAYING) return;
+              loadAndPlayThumb(v);
+              playing.add(v);
+            }
+            function stopPlay(v){
+              pauseAndUnloadThumb(v);
+              playing.delete(v);
+            }
             thumbs.forEach(function(v){
               try{
-                v.muted = true; v.loop = true; v.playsInline = true; v.preload = 'metadata';
-                v.addEventListener('pointerenter', function(){ loadAndPlayThumb(v); });
-                v.addEventListener('pointerleave', function(){ pauseAndUnloadThumb(v); });
-                v.addEventListener('touchstart', function(){ loadAndPlayThumb(v); }, {passive:true});
+                v.addEventListener('pointerenter', function(){ tryPlay(v); });
+                v.addEventListener('pointerleave', function(){ stopPlay(v); });
+                v.addEventListener('touchstart', function(){ tryPlay(v); }, {passive:true});
               }catch(e){}
             });
           }
