@@ -75,10 +75,10 @@
             <img class="gallery-item" loading="lazy" src="assets/media/Gallery17.png" />
           </a>
           <a class="gallery-link" href="assets/media/Gallery18.mp4">
-            <video class="gallery-item gallery-video-thumb" src="assets/media/Gallery18.mp4" muted loop playsinline preload="metadata"></video>
+            <video class="gallery-item gallery-video-thumb" data-src="assets/media/Gallery18.mp4" muted loop playsinline preload="none"></video>
           </a>
           <a class="gallery-link" href="assets/media/Gallery19.mp4">
-            <video class="gallery-item gallery-video-thumb" src="assets/media/Gallery19.mp4" muted loop playsinline preload="metadata"></video>
+            <video class="gallery-item gallery-video-thumb" data-src="assets/media/Gallery19.mp4" muted loop playsinline preload="none"></video>
           </a>
           <a class="gallery-link" href="assets/media/Gallery20.JPG">
             <img class="gallery-item" loading="lazy" src="assets/media/Gallery20.JPG" />
@@ -376,15 +376,42 @@
             });
             lightboxVideo.muted = true; lightboxVideo.loop = true; lightboxVideo.playsInline = true;
           }
-          var thumbs = document.querySelectorAll('.gallery-video-thumb');
-          thumbs.forEach(function(v){
+          var thumbs = Array.prototype.slice.call(document.querySelectorAll('.gallery-video-thumb'));
+          function loadAndPlayThumb(v){
             try{
-              v.muted = true; v.loop = true; v.playsInline = true; v.preload = 'metadata';
-              v.addEventListener('pointerenter', function(){ try{ var p = v.play(); if(p && p.catch) p.catch(function(){}); }catch(e){} });
-              v.addEventListener('pointerleave', function(){ try{ v.pause(); v.currentTime = 0; }catch(e){} });
-              v.addEventListener('touchstart', function(){ try{ var p = v.play(); if(p && p.catch) p.catch(function(){}); }catch(e){} }, {passive:true});
+              var src = v.dataset.src || v.getAttribute('data-src');
+              if(!v.src && src){ v.src = src; v.load(); }
+              var p = v.play(); if(p && p.catch) p.catch(function(){});
             }catch(e){}
-          });
+          }
+          function pauseAndUnloadThumb(v){
+            try{
+              v.pause(); v.currentTime = 0;
+              if(v.src){ v.removeAttribute('src'); try{ v.load(); }catch(e){} }
+            }catch(e){}
+          }
+          if('IntersectionObserver' in window){
+            var io = new IntersectionObserver(function(entries){
+              entries.forEach(function(entry){
+                var v = entry.target;
+                if(entry.isIntersecting && entry.intersectionRatio > 0.4){
+                  loadAndPlayThumb(v);
+                } else {
+                  pauseAndUnloadThumb(v);
+                }
+              });
+            }, { root: null, rootMargin: '0px', threshold: [0, 0.4, 0.8] });
+            thumbs.forEach(function(v){ io.observe(v); });
+          } else {
+            thumbs.forEach(function(v){
+              try{
+                v.muted = true; v.loop = true; v.playsInline = true; v.preload = 'metadata';
+                v.addEventListener('pointerenter', function(){ loadAndPlayThumb(v); });
+                v.addEventListener('pointerleave', function(){ pauseAndUnloadThumb(v); });
+                v.addEventListener('touchstart', function(){ loadAndPlayThumb(v); }, {passive:true});
+              }catch(e){}
+            });
+          }
         }catch(e){}
       })();
     </script>
