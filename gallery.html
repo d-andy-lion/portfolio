@@ -183,6 +183,45 @@
         }catch(e){}
       })();
     </script>
+      <script>
+        (function(){
+          try{
+            function isVisible(el){
+              try{
+                var r = el.getBoundingClientRect();
+                return (r.top < window.innerHeight && r.bottom > 0 && r.left < window.innerWidth && r.right > 0);
+              }catch(e){return false}
+            }
+            setTimeout(function(){
+              try{
+                var imgs = Array.prototype.slice.call(document.querySelectorAll('.gallery-item')).filter(function(n){ return n.tagName && n.tagName.toLowerCase() === 'img'; });
+                var videos = Array.prototype.slice.call(document.querySelectorAll('.gallery-video-thumb'));
+                var max = 8, count = 0;
+                for(var i=0;i<imgs.length && count < max;i++){
+                  var im = imgs[i];
+                  try{
+                    var needs = !im.complete || (im.naturalWidth === 0 && im.src);
+                    if(!needs) continue;
+                    if(isVisible(im) || (im.getBoundingClientRect().top - window.innerHeight) < 300){
+                      (function(src){ var p = new Image(); p.onload = function(){}; p.src = src; })(im.src);
+                      count++;
+                    }
+                  }catch(e){}
+                }
+                for(var j=0;j<videos.length && j<6;j++){
+                  try{
+                    var v = videos[j];
+                    if(!v) continue;
+                    var s = v.getAttribute('data-src');
+                    if(!s) continue;
+                    if(!v.src || v.src.indexOf(s) === -1){ v.src = s; v.muted = true; try{ v.load(); }catch(e){} }
+                  }catch(e){}
+                }
+              }catch(e){}
+            }, 800);
+          }catch(e){}
+        })();
+      </script>
     <div class="lightbox-overlay" id="lightbox" aria-hidden="true">
       <button class="lightbox-close" id="lightbox-close" aria-label="Close image">×</button>
       <button class="lightbox-arrow lightbox-prev" id="lightbox-prev" aria-label="Previous image">
