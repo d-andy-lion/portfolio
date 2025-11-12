@@ -180,7 +180,7 @@ html,body{height:100%;margin:0;font-family:'Proxima Nova', sans-serif;background
 .modal .contact-icons .contact-icon{ width:100%; height:100%; object-fit:contain; display:block; }
 .modal .contact-icons a:hover .contact-icon{ transform:scale(1.06); }
 .work-section {
-  padding: 60px 0;
+  padding: 60px 0 calc(80px + env(safe-area-inset-bottom, 0px));
 }
 .work-section .gallery {
   display: grid;
