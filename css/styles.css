@@ -237,6 +237,19 @@ html,body{height:100%;margin:0;font-family:'Proxima Nova', sans-serif;background
   z-index: 60;
   box-shadow: 0 10px 30px rgba(0,0,0,0.6), 0 0 0 6px rgba(255,255,255,0.06);
 }
+.work-section .gallery-link::after{
+  content: '';
+  position: absolute;
+  inset: 6px;
+  border-radius: 6px;
+  pointer-events: none;
+  z-index: 5;
+  opacity: 0;
+  transition: opacity 160ms ease, transform 120ms ease;
+  box-shadow: 0 10px 30px rgba(0,0,0,0.6);
+  transform: translateY(0) scale(1);
+}
+.work-section .gallery-link:hover::after{ opacity: 1; transform: translateY(-2px) scale(1.02); }
 .work-section .gallery-link:focus { outline-color: rgba(255,255,255,0.98); outline-width: 6px; }
 .gallery-video-thumb{ position:absolute; top:0; left:0; right:0; bottom:0; width:100%; height:100%; display:block; object-fit:cover; border-radius:0; }
 .lightbox-overlay {
