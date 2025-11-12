@@ -191,7 +191,7 @@ html,body{height:100%;margin:0;font-family:'Proxima Nova', sans-serif;background
   margin-top: 64px;
 }
 .gallery-bottom-spacer{
-  height: 48px;
+  height: 160px;
   width: 100%;
 }
 .work-section .gallery-link {
@@ -271,6 +271,7 @@ html,body{height:100%;margin:0;font-family:'Proxima Nova', sans-serif;background
 }
 .lightbox-overlay.open { opacity: 1; visibility: visible; pointer-events: auto; }
 .lightbox-overlay img { max-width: 92%; max-height: 86%; border-radius: 8px; box-shadow: 0 10px 40px rgba(0,0,0,0.6); }
+.site-footer{ position: relative; z-index: 0; }
 .lightbox-close {
   position: absolute;
   right: 18px;
