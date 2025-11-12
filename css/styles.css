@@ -239,7 +239,7 @@ html,body{height:100%;margin:0;font-family:'Proxima Nova', sans-serif;background
   outline: none;
   transform: translateY(-2px) scale(1.01);
   z-index: 60;
-  box-shadow: 0 10px 30px rgba(0,0,0,0.6), 0 0 0 6px rgba(255,255,255,0.06);
+  box-shadow: 0 10px 30px rgba(0,0,0,0.6), 0 0 0 6px rgba(255,255,255,0.14), 0 0 18px rgba(255,255,255,0.06);
 }
 .work-section .gallery-link::after{
   content: '';
