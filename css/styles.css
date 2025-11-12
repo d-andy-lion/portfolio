@@ -190,6 +190,10 @@ html,body{height:100%;margin:0;font-family:'Proxima Nova', sans-serif;background
   align-items: stretch;
   margin-top: 64px;
 }
+.gallery-bottom-spacer{
+  height: 48px;
+  width: 100%;
+}
 .work-section .gallery-link {
   display: block;
   position: relative;
