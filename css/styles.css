@@ -235,6 +235,8 @@ html,body{height:100%;margin:0;font-family:'Proxima Nova', sans-serif;background
   opacity: 1;
 }
 .gallery-video-thumb{ z-index: 1; }
+.gallery-video-thumb.thumb-loading{ background:#111; }
+.gallery-video-thumb.thumb-error{ background:#1a1a1a; }
 .work-section .gallery-link:hover .gallery-item { transform: scale(1.035); }
 .work-section .gallery-link:hover {
   outline-color: transparent;
