@@ -71,7 +71,10 @@
         if (el) el.textContent = new Date().getFullYear();
       })();
       (function(){
-        document.body.classList.remove('page-transitioning');
+        // Fade in on landing
+        document.body.classList.add('page-transitioning');
+        setTimeout(function(){ document.body.classList.remove('page-transitioning'); }, 50);
+        // Fade out when navigating to gallery
         var galleryLink = document.querySelector('a[href="gallery.html"]');
         if(galleryLink){
           galleryLink.addEventListener('click', function(e){
