@@ -403,23 +403,26 @@
       (function(){
         function forceLoadThumb(link, attempt){
           try{
+            console.log('forceLoadThumb called', link, attempt);
             if(!link) return;
             var media = link.querySelector('.gallery-item');
-            if(!media) return;
+            if(!media) { console.log('No .gallery-item found in link', link); return; }
             var tag = media.tagName.toLowerCase();
             attempt = attempt || 1;
             if(tag === 'img'){
-              if(media.complete && media.naturalWidth > 0) return;
+              if(media.complete && media.naturalWidth > 0) { console.log('Image already loaded', media); return; }
               var src = media.getAttribute('src');
-              if(!src) return;
+              if(!src) { console.log('No src for image', media); return; }
               var bust = src + (src.indexOf('?') === -1 ? '?fl=' + attempt : '&fl=' + attempt);
               var pre = new Image();
               pre.onload = function(){
                 try{
                   if(!media.complete || media.naturalWidth === 0){ media.src = bust; }
+                  console.log('Image loaded via preloader', bust);
                 }catch(e){}
               };
               pre.onerror = function(){
+                console.log('Image preload error', bust, 'attempt', attempt);
                 setTimeout(function(){ forceLoadThumb(link, attempt + 1); }, 350);
               };
               pre.src = bust;
@@ -430,6 +433,7 @@
               if(ds && (!v.src || v.src.indexOf(ds) === -1)){
                 v.src = ds;
                 try{ v.load(); }catch(e){}
+                console.log('Video src set', ds);
               }
               var tried = attempt || 1;
               var played = false;
@@ -437,14 +441,16 @@
                 if(played) return;
                 played = true;
                 try{ var p = v.play(); if(p && p.catch) p.catch(function(){}); }catch(e){}
+                console.log('Video play attempted', v);
               }
               v.onerror = function(){
+                console.log('Video error', v, 'attempt', tried);
                 setTimeout(function(){ forceLoadThumb(link, tried + 1); }, 350);
               };
               v.oncanplay = tryPlay;
               setTimeout(tryPlay, 400);
             }
-          }catch(err){}
+          }catch(err){ console.log('forceLoadThumb error', err); }
         }
         try{ window.forceLoadThumb = forceLoadThumb; }catch(e){}
         var links = Array.prototype.slice.call(document.querySelectorAll('.gallery-link'));
