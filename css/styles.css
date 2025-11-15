@@ -35,6 +35,8 @@
 }
 *{box-sizing:border-box}
 html,body{height:100%;margin:0;font-family:'Proxima Nova', sans-serif;background:var(--bg);color:var(--text);font-weight:400;overflow-x:hidden}
+body{transition:opacity 400ms ease;opacity:1}
+body.page-transitioning{opacity:0}
 .hide-vertical-scroll{
   -ms-overflow-style: none;
   scrollbar-width: none;

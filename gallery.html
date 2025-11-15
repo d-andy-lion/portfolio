@@ -401,6 +401,14 @@
     </script>
     <script>
       (function(){
+        document.body.classList.add('page-transitioning');
+        window.addEventListener('DOMContentLoaded', function(){
+          setTimeout(function(){ document.body.classList.remove('page-transitioning'); }, 50);
+        });
+      })();
+    </script>
+    <script>
+      (function(){
         function forceLoadThumb(link, attempt){
           try{
             console.log('forceLoadThumb called', link, attempt);

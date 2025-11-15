@@ -71,6 +71,17 @@
         if (el) el.textContent = new Date().getFullYear();
       })();
       (function(){
+        document.body.classList.remove('page-transitioning');
+        var galleryLink = document.querySelector('a[href="gallery.html"]');
+        if(galleryLink){
+          galleryLink.addEventListener('click', function(e){
+            e.preventDefault();
+            document.body.classList.add('page-transitioning');
+            setTimeout(function(){ window.location.href = 'gallery.html'; }, 420);
+          });
+        }
+      })();
+      (function(){
         var trigger = document.getElementById('contact-trigger');
         var modal = document.getElementById('contact-modal');
         var closeBtn = document.getElementById('contact-close');
