@@ -401,10 +401,20 @@
     </script>
     <script>
       (function(){
+        var homeLink = document.querySelector('a[href="index.html"]');
+        if(homeLink){
+          homeLink.addEventListener('click', function(e){
+            e.preventDefault();
+            document.body.classList.add('page-transitioning');
+            setTimeout(function(){ window.location.href = 'index.html'; }, 420);
+          });
+        }
+      })();
+    </script>
+    <script>
+      (function(){
         document.body.classList.add('page-transitioning');
-        window.addEventListener('DOMContentLoaded', function(){
-          setTimeout(function(){ document.body.classList.remove('page-transitioning'); }, 50);
-        });
+        setTimeout(function(){ document.body.classList.remove('page-transitioning'); }, 50);
       })();
     </script>
     <script>
