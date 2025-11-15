@@ -399,5 +399,50 @@
         if (el) el.textContent = new Date().getFullYear();
       })();
     </script>
+    <script>
+      (function(){
+        function forceLoadThumb(link){
+          try{
+            if(!link) return;
+            var media = link.querySelector('.gallery-item');
+            if(!media) return;
+            var tag = media.tagName.toLowerCase();
+            if(tag === 'img'){
+              // If already loaded successfully, skip
+              if(media.complete && media.naturalWidth > 0) return;
+              var src = media.getAttribute('src');
+              if(!src) return;
+              // Preload with a cache-busting param to retry if stalled
+              var bust = src + (src.indexOf('?') === -1 ? '?fl=1' : '&fl=1');
+              var pre = new Image();
+              pre.onload = function(){
+                try{
+                  // If original still not rendered, swap (or reassign) to ensure decode
+                  if(!media.complete || media.naturalWidth === 0){ media.src = bust; }
+                }catch(e){}
+              };
+              pre.onerror = function(){ /* swallow */ };
+              pre.src = bust;
+            } else if(tag === 'video') {
+              var v = media;
+              try{ v.muted = true; v.playsInline = true; }catch(e){}
+              var ds = v.getAttribute('data-src');
+              if(ds && (!v.src || v.src.indexOf(ds) === -1)){
+                v.src = ds;
+                try{ v.load(); }catch(e){}
+              }
+              try{ var p = v.play(); if(p && p.catch) p.catch(function(){}); }catch(e){}
+            }
+          }catch(err){}
+        }
+        try{ window.forceLoadThumb = forceLoadThumb; }catch(e){}
+        var links = Array.prototype.slice.call(document.querySelectorAll('.gallery-link'));
+        links.forEach(function(l){
+          l.addEventListener('mouseenter', function(){ forceLoadThumb(l); }, { passive: true });
+          l.addEventListener('focus', function(){ forceLoadThumb(l); });
+          l.addEventListener('click', function(){ forceLoadThumb(l); });
+        });
+      })();
+    </script>
   </body>
 </html>
