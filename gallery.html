@@ -401,27 +401,27 @@
     </script>
     <script>
       (function(){
-        function forceLoadThumb(link){
+        function forceLoadThumb(link, attempt){
           try{
             if(!link) return;
             var media = link.querySelector('.gallery-item');
             if(!media) return;
             var tag = media.tagName.toLowerCase();
+            attempt = attempt || 1;
             if(tag === 'img'){
-              // If already loaded successfully, skip
               if(media.complete && media.naturalWidth > 0) return;
               var src = media.getAttribute('src');
               if(!src) return;
-              // Preload with a cache-busting param to retry if stalled
-              var bust = src + (src.indexOf('?') === -1 ? '?fl=1' : '&fl=1');
+              var bust = src + (src.indexOf('?') === -1 ? '?fl=' + attempt : '&fl=' + attempt);
               var pre = new Image();
               pre.onload = function(){
                 try{
-                  // If original still not rendered, swap (or reassign) to ensure decode
                   if(!media.complete || media.naturalWidth === 0){ media.src = bust; }
                 }catch(e){}
               };
-              pre.onerror = function(){ /* swallow */ };
+              pre.onerror = function(){
+                setTimeout(function(){ forceLoadThumb(link, attempt + 1); }, 350);
+              };
               pre.src = bust;
             } else if(tag === 'video') {
               var v = media;
@@ -431,7 +431,18 @@
                 v.src = ds;
                 try{ v.load(); }catch(e){}
               }
-              try{ var p = v.play(); if(p && p.catch) p.catch(function(){}); }catch(e){}
+              var tried = attempt || 1;
+              var played = false;
+              function tryPlay(){
+                if(played) return;
+                played = true;
+                try{ var p = v.play(); if(p && p.catch) p.catch(function(){}); }catch(e){}
+              }
+              v.onerror = function(){
+                setTimeout(function(){ forceLoadThumb(link, tried + 1); }, 350);
+              };
+              v.oncanplay = tryPlay;
+              setTimeout(tryPlay, 400);
             }
           }catch(err){}
         }
