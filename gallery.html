@@ -158,70 +158,30 @@
         try{
           var vids = Array.prototype.slice.call(document.querySelectorAll('.gallery-video-thumb'));
           if(!vids || !vids.length) return;
-
-          function primeVideo(v){
+          function loadVideoEl(v){
             try{
-              v.classList.add('thumb-loading');
-              v.setAttribute('preload','metadata');
-              v.setAttribute('playsinline','');
-              v.muted = true; v.defaultMuted = true;
               var src = v.getAttribute('data-src');
               if(!src) return;
               if(v.src && v.src.indexOf(src) !== -1) return; // already set
-
-              var ready = false;
-              function clearLoading(){ v.classList.remove('thumb-loading'); }
-              function onReady(){ ready = true; clearLoading(); try{ var p = v.play(); if(p && p.catch) p.catch(function(){}); }catch(e){} }
-              v.onloadeddata = onReady;
-              v.oncanplay = onReady;
-              v.onerror = function(){ v.classList.remove('thumb-loading'); v.classList.add('thumb-error'); };
-
               v.src = src;
+              v.muted = true;
               try{ v.load(); }catch(e){}
-
-              // Watchdog: nudge decode if not ready shortly
-              setTimeout(function(){
-                try{
-                  if(!ready && v.readyState < 2){
-                    try{ v.currentTime = 0.001; }catch(e){}
-                    try{ var p2 = v.play(); if(p2 && p2.catch) p2.catch(function(){}); }catch(e){}
-                  }
-                }catch(e){}
-              }, 900);
-
-              // Fallback: if still not ready, retry load once
-              setTimeout(function(){
-                try{
-                  if(!ready && v.readyState < 2){
-                    try{ v.load(); }catch(e){}
-                  }
-                }catch(e){}
-              }, 1800);
+              var p = v.play(); if(p && p.catch) p.catch(function(){});
             }catch(e){}
           }
-
-          // Observe enter/leave viewport: load early and pause when offscreen
           if('IntersectionObserver' in window){
             var obs = new IntersectionObserver(function(entries){
               entries.forEach(function(en){
-                var v = en.target;
                 if(en.isIntersecting){
-                  primeVideo(v);
-                } else {
-                  // Pause to save CPU
-                  try{ v.pause(); }catch(e){}
+                  loadVideoEl(en.target);
+                  try{ obs.unobserve(en.target); }catch(e){}
                 }
               });
-            }, { root: null, rootMargin: '400px 0px', threshold: 0.01 });
+            }, { root: null, rootMargin: '200px', threshold: 0.01 });
             vids.forEach(function(v){ obs.observe(v); });
           } else {
-            vids.forEach(function(v){ primeVideo(v); });
+            vids.forEach(function(v){ loadVideoEl(v); });
           }
-
-          // Reduce work when tab hidden
-          document.addEventListener('visibilitychange', function(){
-            if(document.hidden){ vids.forEach(function(v){ try{ v.pause(); }catch(e){} }); }
-          });
         }catch(e){}
       })();
     </script>
